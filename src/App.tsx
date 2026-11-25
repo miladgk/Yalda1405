@@ -29,23 +29,7 @@ import {
   type GasEventStatusResponse,
   type GasSubmitRegistrationResponse,
 } from './api/yaldaGas';
-
-declare global {
-  interface Window {
-    google?: {
-      script?: {
-        run?: {
-          withSuccessHandler: (cb: (res: unknown) => void) => {
-            withFailureHandler: (errCb: (err: unknown) => void) => {
-              getEventStatus: () => void;
-              submitRegistration: (payload: unknown) => void;
-            };
-          };
-        };
-      };
-    };
-  }
-}
+import { isGoogleAuthConfigured, type GoogleUserInfo } from './utils/googleAuth';
 
 export default function App() {
   const [step, setStep] = useState<StepId>(1);
@@ -92,10 +76,12 @@ export default function App() {
       });
   };
 
+  const googleAuthEnabled = isGoogleAuthConfigured();
+  const [googleUser, setGoogleUser] = useState<GoogleUserInfo | null>(null);
   const [form, setForm] = useState<RegistrationFormState>(INITIAL_FORM_STATE);
   const [step2Error, setStep2Error] = useState<{
     message: string;
-    field?: 'fullName' | 'email' | 'attendance' | 'photoConsent';
+    field?: 'googleAuth' | 'fullName' | 'email' | 'attendance' | 'photoConsent';
   } | null>(null);
   const [step3Error, setStep3Error] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
@@ -196,6 +182,44 @@ export default function App() {
     });
   };
 
+  const handleGoogleSignInSuccess = (user: GoogleUserInfo) => {
+    setGoogleUser(user);
+    setForm((prev) => ({
+      ...prev,
+      email: user.email,
+      fullName: prev.fullName.trim() ? prev.fullName : user.name,
+    }));
+    setStep2Error((prev) =>
+      prev &&
+      (prev.field === 'googleAuth' ||
+        prev.field === 'email' ||
+        (Boolean(user.name) && prev.field === 'fullName'))
+        ? null
+        : prev
+    );
+  };
+
+  const handleGoogleSignInError = (message: string) => {
+    setStep2Error({
+      message,
+      field: 'googleAuth',
+    });
+  };
+
+  const handleSwitchGoogleAccount = () => {
+    window.google?.accounts?.id?.disableAutoSelect?.();
+    setGoogleUser(null);
+    setForm((prev) => ({ ...prev, email: '' }));
+    setStep2Error(null);
+  };
+
+  const validateCurrentStep2 = () =>
+    validateStep2(form, {
+      requireGoogleAuth: googleAuthEnabled,
+      googleVerified: Boolean(googleUser?.emailVerified),
+      verifiedEmail: googleUser?.email,
+    });
+
   const handleNext = () => {
     if (capacity.isFull) return;
 
@@ -205,7 +229,7 @@ export default function App() {
     }
 
     if (step === 2) {
-      const check = validateStep2(form);
+      const check = validateCurrentStep2();
       if (!check.valid) {
         setStep2Error({
           message: check.errorMessage ?? 'لطفاً فیلدهای الزامی را تکمیل کنید.',
@@ -234,7 +258,7 @@ export default function App() {
   };
 
   const handleSubmit = () => {
-    const check = validateStep2(form);
+    const check = validateCurrentStep2();
     if (!check.valid) {
       setStep3Error(check.errorMessage ?? 'اطلاعات مرحله قبل ناقص است.');
       return;
@@ -336,6 +360,8 @@ export default function App() {
   };
 
   const handleReset = () => {
+    window.google?.accounts?.id?.disableAutoSelect?.();
+    setGoogleUser(null);
     setForm(INITIAL_FORM_STATE);
     setStep2Error(null);
     setStep3Error(null);
@@ -380,6 +406,11 @@ export default function App() {
                   remainingSeats={capacity.remaining}
                   errorMsg={step2Error?.message ?? null}
                   errorField={step2Error?.field}
+                  googleAuthEnabled={googleAuthEnabled}
+                  googleUser={googleUser}
+                  onGoogleSignInSuccess={handleGoogleSignInSuccess}
+                  onGoogleSignInError={handleGoogleSignInError}
+                  onSwitchGoogleAccount={handleSwitchGoogleAccount}
                   onChangeField={handleFieldChange}
                   onAdjustGuests={handleAdjustGuests}
                 />

@@ -1,4 +1,5 @@
 import { EVENT_CONFIG, type CapacityStatus, type RegistrationFormState } from '../types/yalda';
+import { isGoogleAuthConfigured } from './googleAuth';
 
 const PERSIAN_DIGITS = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
 
@@ -39,13 +40,34 @@ export function calculateFee(guests: number, pricePerPerson = EVENT_CONFIG.price
 
 export interface Step2ValidationResult {
   valid: boolean;
-  errorField?: 'fullName' | 'email' | 'attendance' | 'photoConsent';
+  errorField?: 'googleAuth' | 'fullName' | 'email' | 'attendance' | 'photoConsent';
   errorMessage?: string;
 }
 
+export interface Step2ValidationOptions {
+  requireGoogleAuth?: boolean;
+  googleVerified?: boolean;
+  verifiedEmail?: string;
+}
+
 export function validateStep2(
-  form: Pick<RegistrationFormState, 'fullName' | 'email' | 'attendance' | 'photoConsent'>
+  form: Pick<RegistrationFormState, 'fullName' | 'email' | 'attendance' | 'photoConsent'>,
+  options: Step2ValidationOptions = {}
 ): Step2ValidationResult {
+  const requireGoogleAuth = options.requireGoogleAuth ?? isGoogleAuthConfigured();
+  if (requireGoogleAuth) {
+    const emailMatches =
+      Boolean(options.verifiedEmail) &&
+      options.verifiedEmail!.trim().toLowerCase() === form.email.trim().toLowerCase();
+    if (!options.googleVerified || !emailMatches) {
+      return {
+        valid: false,
+        errorField: 'googleAuth',
+        errorMessage: 'لطفاً ابتدا با حساب گوگل خود وارد شوید تا ایمیل شما تایید شود.',
+      };
+    }
+  }
+
   const name = form.fullName.trim();
   if (!name) {
     return {

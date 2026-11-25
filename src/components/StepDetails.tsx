@@ -1,17 +1,24 @@
-import { AlertTriangle, Minus, Plus } from 'lucide-react';
+import { AlertTriangle, BadgeCheck, Lock, Minus, Plus, RefreshCw } from 'lucide-react';
 import {
   ATTENDANCE_OPTIONS,
   EVENT_CONFIG,
   PHOTO_CONSENT_OPTIONS,
   type RegistrationFormState,
 } from '../types/yalda';
+import type { GoogleUserInfo } from '../utils/googleAuth';
 import { calculateFee, toFa } from '../utils/yaldaLogic';
+import { GoogleSignInButton } from './GoogleSignInButton';
 
 interface StepDetailsProps {
   form: RegistrationFormState;
   remainingSeats: number;
   errorMsg: string | null;
-  errorField?: 'fullName' | 'email' | 'attendance' | 'photoConsent';
+  errorField?: 'googleAuth' | 'fullName' | 'email' | 'attendance' | 'photoConsent';
+  googleAuthEnabled: boolean;
+  googleUser: GoogleUserInfo | null;
+  onGoogleSignInSuccess: (user: GoogleUserInfo) => void;
+  onGoogleSignInError: (message: string) => void;
+  onSwitchGoogleAccount: () => void;
   onChangeField: <K extends keyof RegistrationFormState>(
     field: K,
     value: RegistrationFormState[K]
@@ -24,6 +31,11 @@ export function StepDetails({
   remainingSeats,
   errorMsg,
   errorField,
+  googleAuthEnabled,
+  googleUser,
+  onGoogleSignInSuccess,
+  onGoogleSignInError,
+  onSwitchGoogleAccount,
   onChangeField,
   onAdjustGuests,
 }: StepDetailsProps) {
@@ -49,6 +61,56 @@ export function StepDetails({
         </div>
       )}
 
+      {/* Mandatory Google Sign-In when VITE_GOOGLE_CLIENT_ID is configured */}
+      {googleAuthEnabled && (
+        googleUser ? (
+          <div className="flex flex-wrap items-center justify-between gap-2.5 rounded-2xl border border-emerald-400/35 bg-gradient-to-l from-emerald-500/15 via-white/[0.06] to-[#dfb16b]/10 px-3.5 py-2.5 shadow-[0_8px_24px_-12px_rgba(52,211,153,0.4)] backdrop-blur-md">
+            <div className="flex min-w-0 items-center gap-2.5">
+              <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl border border-emerald-400/40 bg-emerald-500/20 text-emerald-300">
+                <BadgeCheck className="h-4 w-4" aria-hidden="true" />
+              </div>
+              <div className="min-w-0">
+                <p className="text-[11px] font-semibold text-emerald-200">
+                  ایمیل تاییدشده با حساب گوگل
+                </p>
+                <p dir="ltr" className="truncate text-xs font-bold text-[#fbf6f0] sm:text-sm">
+                  {googleUser.email}
+                </p>
+              </div>
+            </div>
+            <button
+              type="button"
+              onClick={onSwitchGoogleAccount}
+              className="inline-flex min-h-[34px] shrink-0 cursor-pointer items-center gap-1.5 rounded-xl border border-white/18 bg-white/[0.08] px-3 py-1.5 text-[11px] font-bold text-[#e2d4dc] transition hover:border-[#dfb16b]/55 hover:bg-white/14 hover:text-[#fbf6f0]"
+            >
+              <RefreshCw className="h-3.5 w-3.5" aria-hidden="true" />
+              <span>تغییر حساب</span>
+            </button>
+          </div>
+        ) : (
+          <div
+            className={`flex flex-col items-center justify-between gap-3 rounded-2xl border px-4 py-3.5 backdrop-blur-md sm:flex-row ${
+              errorField === 'googleAuth'
+                ? 'border-[#dc2645] bg-[#a61c31]/20 ring-2 ring-[#dc2645]/25'
+                : 'border-[#dfb16b]/40 bg-gradient-to-l from-[#a61c31]/20 via-white/[0.06] to-[#dfb16b]/10'
+            }`}
+          >
+            <div className="space-y-0.5 text-center sm:text-right">
+              <p className="text-xs font-bold text-[#fbf6f0] sm:text-sm">
+                برای تایید ایمیل و ادامه ثبت‌نام، با حساب گوگل خود وارد شوید
+              </p>
+              <p className="text-[11px] text-[#d8c7cf]">
+                نشانی جیمیل شما به‌صورت خودکار تایید و برای ارسال بلیت ثبت می‌شود.
+              </p>
+            </div>
+            <GoogleSignInButton
+              onSuccess={onGoogleSignInSuccess}
+              onError={onGoogleSignInError}
+            />
+          </div>
+        )
+      )}
+
       {/* Name & Email */}
       <div className="grid grid-cols-1 gap-3.5 sm:grid-cols-2">
         <div className="flex flex-col gap-1.5">
@@ -71,21 +133,46 @@ export function StepDetails({
         </div>
 
         <div className="flex flex-col gap-1.5">
-          <label htmlFor="email" className="text-xs font-semibold text-[#fbf6f0] sm:text-sm">
-            ایمیل <span className="text-[#ff6b86]">*</span>
+          <label
+            htmlFor="email"
+            className="flex items-center justify-between gap-2 text-xs font-semibold text-[#fbf6f0] sm:text-sm"
+          >
+            <span>
+              ایمیل <span className="text-[#ff6b86]">*</span>
+            </span>
+            {googleAuthEnabled && (
+              <span className="inline-flex items-center gap-1 text-[11px] font-medium text-[#fae3bb]/90">
+                <Lock className="h-3 w-3" aria-hidden="true" />
+                <span>{googleUser ? 'تاییدشده و قفل‌شده' : 'تکمیل خودکار با گوگل'}</span>
+              </span>
+            )}
           </label>
           <input
             id="email"
             type="email"
             dir="ltr"
             autoComplete="email"
+            readOnly={googleAuthEnabled}
+            aria-readonly={googleAuthEnabled}
             value={form.email}
-            onChange={(e) => onChangeField('email', e.target.value)}
-            placeholder="name@example.com"
-            className={`min-h-[44px] w-full rounded-xl border bg-[#0a060d]/60 px-3.5 py-2 text-left text-base text-[#fbf6f0] placeholder:text-[#9e8d96]/70 focus:outline-none sm:text-sm ${
+            onChange={(e) => {
+              if (!googleAuthEnabled) {
+                onChangeField('email', e.target.value);
+              }
+            }}
+            placeholder={
+              googleAuthEnabled ? 'با ورود به حساب گوگل تکمیل می‌شود' : 'name@example.com'
+            }
+            className={`min-h-[44px] w-full rounded-xl border px-3.5 py-2 text-left text-base text-[#fbf6f0] placeholder:text-[#9e8d96]/70 focus:outline-none sm:text-sm ${
+              googleAuthEnabled
+                ? 'cursor-not-allowed border-white/12 bg-[#0a060d]/45 text-[#e2d4dc]'
+                : 'bg-[#0a060d]/60'
+            } ${
               errorField === 'email'
                 ? 'border-[#dc2645] ring-2 ring-[#dc2645]/25'
-                : 'border-white/15 focus:border-[#dfb16b] focus:ring-2 focus:ring-[#dfb16b]/20'
+                : googleAuthEnabled
+                  ? ''
+                  : 'border-white/15 focus:border-[#dfb16b] focus:ring-2 focus:ring-[#dfb16b]/20'
             }`}
           />
         </div>

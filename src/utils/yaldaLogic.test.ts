@@ -14,6 +14,7 @@ import {
   generateYaldaIcsContent,
 } from './yaldaCalendar';
 import { buildYaldaSharePayload, getSocialShareLinks } from './yaldaShare';
+import { decodeGoogleCredential, isGoogleAuthConfigured } from './googleAuth';
 
 test('toFa converts ASCII digits to Persian digits', () => {
   assert.equal(toFa(1405), '۱۴۰۵');
@@ -125,4 +126,70 @@ test('Social share helpers compose Yalda message and valid platform URLs', () =>
   assert.ok(links.telegram.startsWith('https://t.me/share/url?'));
   assert.ok(links.x.startsWith('https://twitter.com/intent/tweet?text='));
   assert.ok(links.email.startsWith('mailto:?subject='));
+});
+
+function makeTestJwt(payload: Record<string, unknown>): string {
+  const encodeBase64Url = (obj: unknown) =>
+    Buffer.from(JSON.stringify(obj), 'utf8').toString('base64url');
+  return `${encodeBase64Url({ alg: 'RS256', typ: 'JWT' })}.${encodeBase64Url(payload)}.sig`;
+}
+
+test('decodeGoogleCredential extracts email, email_verified, and UTF-8 Persian name safely', () => {
+  const token = makeTestJwt({
+    email: 'sara@gmail.com',
+    email_verified: true,
+    name: 'سارا محمدی',
+  });
+  const decoded = decodeGoogleCredential(token);
+  assert.deepEqual(decoded, {
+    email: 'sara@gmail.com',
+    emailVerified: true,
+    name: 'سارا محمدی',
+    picture: undefined,
+  });
+
+  assert.equal(decodeGoogleCredential('invalid.jwt'), null);
+  assert.equal(decodeGoogleCredential('bad.!!!.sig'), null);
+  assert.equal(decodeGoogleCredential(makeTestJwt({ name: 'No Email' })), null);
+});
+
+test('isGoogleAuthConfigured and validateStep2 enforce verified Google Sign-In when configured', () => {
+  assert.equal(isGoogleAuthConfigured(''), false);
+  assert.equal(isGoogleAuthConfigured('YOUR_GOOGLE_CLIENT_ID'), false);
+  assert.equal(isGoogleAuthConfigured('123456-abc.apps.googleusercontent.com'), true);
+
+  const missingGoogle = validateStep2(
+    {
+      fullName: 'سارا محمدی',
+      email: 'sara@gmail.com',
+      attendance: 'کل برنامه',
+      photoConsent: 'موافق',
+    },
+    { requireGoogleAuth: true, googleVerified: false }
+  );
+  assert.equal(missingGoogle.valid, false);
+  assert.equal(missingGoogle.errorField, 'googleAuth');
+
+  const mismatchedEmail = validateStep2(
+    {
+      fullName: 'سارا محمدی',
+      email: 'other@gmail.com',
+      attendance: 'کل برنامه',
+      photoConsent: 'موافق',
+    },
+    { requireGoogleAuth: true, googleVerified: true, verifiedEmail: 'sara@gmail.com' }
+  );
+  assert.equal(mismatchedEmail.valid, false);
+  assert.equal(mismatchedEmail.errorField, 'googleAuth');
+
+  const verifiedOk = validateStep2(
+    {
+      fullName: 'سارا محمدی',
+      email: 'sara@gmail.com',
+      attendance: 'کل برنامه',
+      photoConsent: 'موافق',
+    },
+    { requireGoogleAuth: true, googleVerified: true, verifiedEmail: 'sara@gmail.com' }
+  );
+  assert.equal(verifiedOk.valid, true);
 });
