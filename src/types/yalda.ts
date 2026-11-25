@@ -18,7 +18,7 @@ export interface EventConfig {
 }
 
 export const EVENT_CONFIG: EventConfig = {
-  associationName: 'انجمن فرهنگی ایرانیان هلسینکی',
+  associationName: 'انجمن فرهنگی هنری آوید',
   title: 'جشن شب یلدا ۱۴۰۵ | هلسینکی',
   date: 'یکشنبه ۲۹ آذر ۱۴۰۵ (۲۰ دسامبر ۲۰۲۶)',
   venue: 'Roihuvuori Youth Centre',
@@ -28,7 +28,7 @@ export const EVENT_CONFIG: EventConfig = {
   filmDesc: 'اکران فیلم (۱۶:۰۰ تا ۱۷:۴۵)',
   mobilePay: '040 123 4567',
   iban: 'FI00 0000 0000 0000 00',
-  contact: 'info@example.fi',
+  contact: 'avidry.finland@gmail.com',
   pricePerPerson: 5,
   maxCapacity: 80,
   initialBooked: 27,
