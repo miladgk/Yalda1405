@@ -22,6 +22,13 @@ import {
   validateStep2,
 } from './utils/yaldaLogic';
 import { disposeYaldaAudio, setYaldaAudioPlaying } from './utils/yaldaAudio';
+import {
+  fetchEventStatusFromGas,
+  isGasUrlConfigured,
+  submitRegistrationToGas,
+  type GasEventStatusResponse,
+  type GasSubmitRegistrationResponse,
+} from './api/yaldaGas';
 
 declare global {
   interface Window {
@@ -101,37 +108,52 @@ export default function App() {
     [capacityTotal, bookedCount]
   );
 
-  // Optional Google Apps Script hydration when hosted inside Apps Script
+  const applyEventStatus = (res: GasEventStatusResponse | null | undefined) => {
+    if (!res) return;
+    const cap = Number(res.capacity || res.maxCapacity) || EVENT_CONFIG.maxCapacity;
+    const reg =
+      typeof res.registered === 'number'
+        ? res.registered
+        : typeof res.booked === 'number'
+          ? res.booked
+          : typeof res.remaining === 'number'
+            ? cap - res.remaining
+            : 0;
+    setCapacityTotal(cap);
+    setBookedCount(reg);
+  };
+
+  // Optional Google Apps Script hydration (Apps Script host or external Web App URL)
   useEffect(() => {
     const runner = window.google?.script?.run;
-    if (!runner) return;
+    if (runner) {
+      runner
+        .withSuccessHandler((raw) => {
+          applyEventStatus(raw as GasEventStatusResponse | null);
+        })
+        .withFailureHandler(() => {
+          // Keep initial defaults gracefully
+        })
+        .getEventStatus();
+      return;
+    }
 
-    runner
-      .withSuccessHandler((raw) => {
-        const res = raw as {
-          capacity?: number;
-          maxCapacity?: number;
-          registered?: number;
-          booked?: number;
-          remaining?: number;
-        } | null;
-        if (!res) return;
-        const cap = Number(res.capacity || res.maxCapacity) || EVENT_CONFIG.maxCapacity;
-        const reg =
-          typeof res.registered === 'number'
-            ? res.registered
-            : typeof res.booked === 'number'
-              ? res.booked
-              : typeof res.remaining === 'number'
-                ? cap - res.remaining
-                : 0;
-        setCapacityTotal(cap);
-        setBookedCount(reg);
+    if (!isGasUrlConfigured()) return;
+
+    let cancelled = false;
+    fetchEventStatusFromGas()
+      .then((res) => {
+        if (!cancelled) {
+          applyEventStatus(res);
+        }
       })
-      .withFailureHandler(() => {
-        // Keep initial defaults gracefully
-      })
-      .getEventStatus();
+      .catch(() => {
+        // Keep initial defaults gracefully on network error
+      });
+
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
   const navigateTo = (target: StepId) => {
@@ -238,56 +260,58 @@ export default function App() {
       notes: form.notes.trim(),
     };
 
+    const handleBackendSuccess = (raw: unknown) => {
+      setSubmitting(false);
+      const res = raw as GasSubmitRegistrationResponse | null;
+
+      if (!res || res.success === false) {
+        setStep3Error(res?.error ?? 'خطایی در ثبت اطلاعات رخ داد.');
+        return;
+      }
+
+      const finalGuests = Number(res.guests) || payload.guests;
+      const totalFee =
+        typeof res.totalFee === 'number' ? res.totalFee : calculateFee(finalGuests);
+
+      setTicket({
+        trackingCode: res.trackingCode || generateTrackingCode(),
+        fullName: res.fullName || payload.fullName,
+        guests: finalGuests,
+        totalFee,
+        attendance: payload.attendance,
+        paymentMethod: payload.paymentMethod,
+        emailSent: res.emailSent !== false,
+        isDemo: false,
+      });
+
+      if (typeof res.capacity === 'number') setCapacityTotal(res.capacity);
+      setBookedCount((prev) =>
+        typeof res.registered === 'number' ? res.registered : prev + finalGuests
+      );
+
+      navigateTo(4);
+      setBurstTrigger((n) => n + 1);
+    };
+
+    const handleBackendError = (err: unknown) => {
+      setSubmitting(false);
+      const message = err instanceof Error ? err.message : String(err);
+      setStep3Error(`خطا در ارتباط با سرور: ${message}`);
+    };
+
     const runner = window.google?.script?.run;
     if (runner) {
       runner
-        .withSuccessHandler((raw) => {
-          setSubmitting(false);
-          const res = raw as {
-            success?: boolean;
-            error?: string;
-            trackingCode?: string;
-            totalFee?: number;
-            guests?: number;
-            fullName?: string;
-            emailSent?: boolean;
-            capacity?: number;
-            registered?: number;
-          } | null;
-
-          if (!res || res.success === false) {
-            setStep3Error(res?.error ?? 'خطایی در ثبت اطلاعات رخ داد.');
-            return;
-          }
-
-          const finalGuests = Number(res.guests) || payload.guests;
-          const totalFee =
-            typeof res.totalFee === 'number' ? res.totalFee : calculateFee(finalGuests);
-
-          setTicket({
-            trackingCode: res.trackingCode || generateTrackingCode(),
-            fullName: res.fullName || payload.fullName,
-            guests: finalGuests,
-            totalFee,
-            attendance: payload.attendance,
-            paymentMethod: payload.paymentMethod,
-            emailSent: res.emailSent !== false,
-            isDemo: false,
-          });
-
-          if (typeof res.capacity === 'number') setCapacityTotal(res.capacity);
-          setBookedCount((prev) =>
-            typeof res.registered === 'number' ? res.registered : prev + finalGuests
-          );
-
-          navigateTo(4);
-          setBurstTrigger((n) => n + 1);
-        })
-        .withFailureHandler((err) => {
-          setSubmitting(false);
-          setStep3Error(`خطا در ارتباط با سرور: ${String(err)}`);
-        })
+        .withSuccessHandler(handleBackendSuccess)
+        .withFailureHandler(handleBackendError)
         .submitRegistration(payload);
+      return;
+    }
+
+    if (isGasUrlConfigured()) {
+      submitRegistrationToGas(payload)
+        .then(handleBackendSuccess)
+        .catch(handleBackendError);
       return;
     }
 
