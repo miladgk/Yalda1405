@@ -1,0 +1,3005 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>جشن شب یلدا ۱۴۰۵ | هلسینکی</title>
+
+  <!-- Google Font: Vazirmatn -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    /* =========================================================================
+       1. DESIGN TOKENS & STRICT SINGLE-SCREEN NON-SCROLLING VIEWPORT LOCK
+       ========================================================================= */
+    :root {
+      --bg-obsidian: #0a0509;
+      --bg-burgundy: #1c0a13;
+      --ruby: #a61c31;
+      --ruby-bright: #dc2645;
+      --gold: #dfb16b;
+      --gold-bright: #fae3bb;
+      --aurora: #3b6998;
+      --aurora-light: #9cd4fa;
+      --emerald: #34d399;
+      --amber: #f59e0b;
+
+      --text-main: #fbf6f0;
+      --text-soft: #d7c7cf;
+      --text-muted: #9e8d96;
+
+      --glass-bg: linear-gradient(
+        152deg,
+        rgba(38, 16, 28, 0.58) 0%,
+        rgba(13, 8, 18, 0.74) 52%,
+        rgba(28, 12, 22, 0.64) 100%
+      );
+      --glass-border: rgba(223, 177, 107, 0.28);
+      --glass-rim: rgba(255, 255, 255, 0.26);
+
+      --ease-stage: cubic-bezier(0.22, 1, 0.36, 1);
+      --ease-flip: cubic-bezier(0.34, 1.24, 0.64, 1);
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* Strict outer viewport lock: never scrolls vertically on desktop, tablet, or mobile */
+    html, body {
+      width: 100%;
+      height: 100dvh;
+      overflow: hidden;
+      margin: 0;
+      padding: 0;
+      background-color: var(--bg-obsidian);
+      font-family: 'Vazirmatn', system-ui, -apple-system, sans-serif;
+      color: var(--text-main);
+      -webkit-font-smoothing: antialiased;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      position: fixed;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background:
+        radial-gradient(circle at 18% 16%, rgba(166, 28, 49, 0.25), transparent 46%),
+        radial-gradient(circle at 84% 82%, rgba(59, 105, 152, 0.25), transparent 48%),
+        linear-gradient(158deg, #0a0509 0%, #1c0a13 54%, #0a0509 100%);
+    }
+
+    /* =========================================================================
+       2. AMBIENT LIQUID ORBS, HELSINKI WINTER SKY, SHAMSEH & SNOW CANVAS
+       ========================================================================= */
+    .ambient-orbs {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    .orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(86px);
+      will-change: transform;
+    }
+
+    .orb-ruby {
+      width: min(62vw, 520px);
+      height: min(62vw, 520px);
+      top: -18%;
+      right: -12%;
+      background: radial-gradient(circle, rgba(166, 28, 49, 0.78) 0%, transparent 70%);
+      opacity: 0.56;
+      animation: driftA 20s ease-in-out infinite alternate;
+    }
+
+    .orb-gold {
+      width: min(54vw, 460px);
+      height: min(54vw, 460px);
+      bottom: -16%;
+      left: -10%;
+      background: radial-gradient(circle, rgba(223, 177, 107, 0.52) 0%, transparent 72%);
+      opacity: 0.42;
+      animation: driftB 24s ease-in-out infinite alternate;
+    }
+
+    .orb-aurora {
+      width: min(56vw, 480px);
+      height: min(56vw, 480px);
+      top: 14%;
+      left: 50%;
+      background: radial-gradient(circle, rgba(59, 105, 152, 0.66) 0%, transparent 72%);
+      opacity: 0.46;
+      animation: driftC 26s ease-in-out infinite alternate;
+    }
+
+    @keyframes driftA {
+      0% { transform: translate3d(0, 0, 0) scale(1); }
+      100% { transform: translate3d(-42px, 34px, 0) scale(1.1); }
+    }
+    @keyframes driftB {
+      0% { transform: translate3d(0, 0, 0) scale(1); }
+      100% { transform: translate3d(38px, -28px, 0) scale(1.08); }
+    }
+    @keyframes driftC {
+      0% { transform: translate3d(0, 0, 0) scale(1); }
+      100% { transform: translate3d(-34px, -22px, 0) scale(1.07); }
+    }
+
+    /* MOTIF 5: Camouflaged Realistic Helsinki Winter Night Sky */
+    .nordic-sky-svg {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .star-twinkle { animation: starPulse 6.2s ease-in-out infinite; }
+    .star-twinkle-slow { animation: starPulse 9.4s ease-in-out infinite 2.1s; }
+    .star-twinkle-alt { animation: starPulse 7.8s ease-in-out infinite 3.6s; }
+    .constellation-glow { animation: lineBreath 11s ease-in-out infinite; }
+
+    @keyframes starPulse {
+      0%, 100% { opacity: 0.32; }
+      50% { opacity: 0.78; }
+    }
+    @keyframes lineBreath {
+      0%, 100% { stroke-opacity: 0.055; }
+      50% { stroke-opacity: 0.088; }
+    }
+
+    /* MOTIF 4: Rotating Golden Persian Shamseh with Banna'i/Kufic Tile Ring */
+    .shamseh-stage {
+      position: fixed;
+      inset: 0;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    .shamseh-svg {
+      width: min(96vmin, 770px);
+      height: min(96vmin, 770px);
+      opacity: 0.11;
+      color: var(--gold);
+      animation: spinShamseh 100s linear infinite;
+      will-change: transform;
+    }
+
+    @keyframes spinShamseh {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    /* Interactive Snowfall + Step 4 Celebratory Sparkle Canvas */
+    #fxCanvas {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    /* =========================================================================
+       3. CENTERED FLOATING 3D LIQUID GLASSMORPHISM STAGE (ALL DEVICES IDENTICAL)
+       ========================================================================= */
+    .stage-shell {
+      position: relative;
+      z-index: 10;
+      width: min(94vw, 720px);
+      height: min(91dvh, 675px);
+      perspective: 1800px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .glass-card {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      border-radius: clamp(22px, 3vw, 30px);
+      background: var(--glass-bg);
+      -webkit-backdrop-filter: blur(24px) saturate(145%);
+      backdrop-filter: blur(24px) saturate(145%);
+      border: 1px solid var(--glass-border);
+      border-top-color: var(--glass-rim);
+      border-right-color: rgba(255, 255, 255, 0.14);
+      box-shadow:
+        0 34px 78px -18px rgba(0, 0, 0, 0.85),
+        0 0 46px -14px rgba(166, 28, 49, 0.45),
+        inset 0 1px 0 rgba(255, 255, 255, 0.26),
+        inset 0 -1px 0 rgba(223, 177, 107, 0.18);
+      transform: rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg)) translateZ(0);
+      transition: transform 0.24s var(--ease-stage);
+      will-change: transform;
+    }
+
+    /* Specular Liquid Glass Sheen */
+    .glass-sheen {
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 0;
+    }
+    .glass-sheen::before {
+      content: '';
+      position: absolute;
+      top: -60%;
+      left: -40%;
+      width: 180%;
+      height: 200%;
+      background: linear-gradient(
+        118deg,
+        transparent 40%,
+        rgba(255, 255, 255, 0.05) 49%,
+        rgba(223, 177, 107, 0.04) 53%,
+        transparent 62%
+      );
+      animation: liquidSweep 12s ease-in-out infinite;
+    }
+    @keyframes liquidSweep {
+      0%, 100% { transform: translateX(15%); }
+      50% { transform: translateX(-15%); }
+    }
+
+    /* =========================================================================
+       4. PINNED HEADER + CAPACITY METER + 4-STEP STEPPER + GUILLOCHÉ DIVIDER
+       ========================================================================= */
+    .card-header {
+      position: relative;
+      z-index: 6;
+      flex: 0 0 auto;
+      padding: clamp(10px, 1.6vh, 14px) clamp(12px, 2.4vw, 20px) 0;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.055) 0%, rgba(0, 0, 0, 0.14) 100%);
+    }
+
+    .header-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: clamp(7px, 1.1vh, 10px);
+    }
+
+    .brand-group {
+      display: flex;
+      align-items: center;
+      gap: clamp(7px, 1.5vw, 11px);
+      min-width: 0;
+    }
+
+    .emblem-frame {
+      width: clamp(38px, 5vw, 44px);
+      height: clamp(38px, 5vw, 44px);
+      border-radius: 13px;
+      background: radial-gradient(circle at 32% 28%, rgba(220, 38, 69, 0.34), rgba(14, 7, 15, 0.8));
+      border: 1px solid rgba(223, 177, 107, 0.48);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      box-shadow: 0 0 18px -4px rgba(166, 28, 49, 0.65), inset 0 1px 0 rgba(255, 255, 255, 0.26);
+    }
+
+    .brand-copy { min-width: 0; }
+
+    .brand-title {
+      font-size: clamp(0.86rem, 2.35vw, 1.1rem);
+      font-weight: 800;
+      line-height: 1.25;
+      background: linear-gradient(96deg, #fffaf4 10%, #fae3bb 56%, #ffa3b6 96%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .brand-sub {
+      font-size: clamp(0.64rem, 1.55vw, 0.73rem);
+      color: var(--text-soft);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .header-controls {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-shrink: 0;
+    }
+
+    /* Live Capacity Progress Pill */
+    .capacity-pill {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      padding: 5px 10px;
+      border-radius: 12px;
+      background: rgba(10, 6, 13, 0.56);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      min-width: clamp(114px, 25vw, 168px);
+    }
+
+    .cap-row {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: clamp(0.6rem, 1.5vw, 0.7rem);
+      font-weight: 700;
+      color: var(--gold-bright);
+      white-space: nowrap;
+    }
+
+    .cap-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--emerald);
+      box-shadow: 0 0 8px var(--emerald);
+      flex-shrink: 0;
+    }
+
+    .capacity-pill.is-low .cap-dot {
+      background: var(--amber);
+      box-shadow: 0 0 8px var(--amber);
+      animation: capPulse 1.4s infinite;
+    }
+
+    .capacity-pill.is-full .cap-dot {
+      background: var(--ruby-bright);
+      box-shadow: 0 0 8px var(--ruby-bright);
+    }
+
+    @keyframes capPulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(1.3); }
+    }
+
+    .cap-track {
+      width: 100%;
+      height: 4px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.1);
+      overflow: hidden;
+    }
+
+    .cap-fill {
+      height: 100%;
+      width: 34%;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--emerald), var(--gold));
+      transition: width 0.6s var(--ease-stage), background 0.3s ease;
+    }
+
+    .snow-toggle {
+      height: 35px;
+      padding: 0 9px;
+      border-radius: 11px;
+      background: rgba(59, 105, 152, 0.25);
+      border: 1px solid rgba(156, 212, 250, 0.36);
+      color: #dff2ff;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      font-family: inherit;
+      font-size: 0.72rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .snow-toggle:hover {
+      background: rgba(59, 105, 152, 0.4);
+      border-color: rgba(156, 212, 250, 0.6);
+    }
+
+    .snow-toggle[aria-pressed="false"] {
+      background: rgba(255, 255, 255, 0.06);
+      border-color: rgba(255, 255, 255, 0.14);
+      color: var(--text-muted);
+    }
+
+    /* Compact 4-Step Progress Stepper */
+    .stepper-bar {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: clamp(4px, 1vw, 7px);
+      padding: 4px;
+      border-radius: 13px;
+      background: rgba(10, 6, 13, 0.52);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .step-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: clamp(3px, 0.8vw, 6px);
+      min-height: 32px;
+      padding: 3px clamp(3px, 0.8vw, 8px);
+      border-radius: 9px;
+      border: 1px solid transparent;
+      background: transparent;
+      color: var(--text-muted);
+      font-family: inherit;
+      font-size: clamp(0.62rem, 1.75vw, 0.77rem);
+      font-weight: 600;
+      white-space: nowrap;
+      cursor: default;
+      transition: all 0.28s var(--ease-stage);
+    }
+
+    .step-num {
+      width: clamp(16px, 2.4vw, 19px);
+      height: clamp(16px, 2.4vw, 19px);
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: clamp(0.58rem, 1.5vw, 0.69rem);
+      font-weight: 800;
+      flex-shrink: 0;
+    }
+
+    .step-btn.is-active {
+      background: linear-gradient(135deg, rgba(166, 28, 49, 0.46), rgba(223, 177, 107, 0.2));
+      border-color: rgba(223, 177, 107, 0.52);
+      color: var(--text-main);
+      box-shadow: 0 6px 16px -6px rgba(166, 28, 49, 0.65);
+    }
+
+    .step-btn.is-active .step-num {
+      background: var(--gold);
+      border-color: var(--gold-bright);
+      color: #170a11;
+      box-shadow: 0 0 10px rgba(223, 177, 107, 0.65);
+    }
+
+    .step-btn.is-done {
+      color: var(--gold-bright);
+      cursor: pointer;
+    }
+
+    .step-btn.is-done:hover {
+      background: rgba(223, 177, 107, 0.14);
+      border-color: rgba(223, 177, 107, 0.34);
+    }
+
+    .step-btn.is-done .step-num {
+      background: rgba(52, 211, 153, 0.22);
+      border-color: rgba(52, 211, 153, 0.58);
+      color: #6ee7b7;
+    }
+
+    /* MOTIF 6: Ultra-Fine Guilloché Security Wave Divider */
+    .guilloche-divider {
+      display: block;
+      width: calc(100% + clamp(24px, 4.8vw, 40px));
+      margin: clamp(6px, 1vh, 9px) calc(clamp(12px, 2.4vw, 20px) * -1) 0;
+      height: 15px;
+      pointer-events: none;
+    }
+
+    /* =========================================================================
+       5. 3D PERSPECTIVE STAGE VIEWPORT (ONLY ONE PANEL VISIBLE AT A TIME)
+       ========================================================================= */
+    .stage-viewport {
+      position: relative;
+      z-index: 4;
+      flex: 1 1 auto;
+      min-height: 0;
+      width: 100%;
+      overflow: hidden;
+      perspective: 1300px;
+      transform-style: preserve-3d;
+    }
+
+    .step-panel {
+      position: absolute;
+      inset: 0;
+      overflow-y: auto;
+      overflow-x: hidden;
+      -webkit-overflow-scrolling: touch;
+      padding: clamp(10px, 1.8vh, 16px) clamp(12px, 2.6vw, 20px);
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transform-origin: center center;
+      transform: rotateY(-60deg) translateZ(-90px) scale(0.93);
+      filter: blur(7px);
+      transition:
+        transform 0.58s var(--ease-stage),
+        opacity 0.45s var(--ease-stage),
+        filter 0.45s var(--ease-stage),
+        visibility 0s linear 0.58s;
+      will-change: transform, opacity, filter;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(223, 177, 107, 0.34) transparent;
+    }
+
+    .step-panel::-webkit-scrollbar { width: 5px; }
+    .step-panel::-webkit-scrollbar-track { background: transparent; }
+    .step-panel::-webkit-scrollbar-thumb {
+      background: rgba(223, 177, 107, 0.34);
+      border-radius: 999px;
+    }
+
+    .step-panel.is-active {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+      transform: rotateY(0deg) translateZ(0) scale(1);
+      filter: blur(0px);
+      transition:
+        transform 0.58s var(--ease-stage),
+        opacity 0.45s var(--ease-stage),
+        filter 0.45s var(--ease-stage),
+        visibility 0s linear 0s;
+    }
+
+    .step-panel.pose-next {
+      transform: rotateY(-60deg) translateZ(-90px) scale(0.93);
+      opacity: 0;
+      filter: blur(7px);
+    }
+
+    .step-panel.pose-prev {
+      transform: rotateY(60deg) translateZ(-90px) scale(0.93);
+      opacity: 0;
+      filter: blur(7px);
+    }
+
+    .step-panel.no-transition { transition: none !important; }
+
+    /* =========================================================================
+       6. SUBCONSCIOUS TYPOGRAPHY & MORSE MICRO-ORNAMENT UTILITIES
+       ========================================================================= */
+    /* MOTIF 2: Bookend Typography ("MobilePay / IBAN") — ultra-subtle warm gold luminosity on M & N */
+    .bookend-mn {
+      direction: ltr;
+      unicode-bidi: isolate;
+      display: inline-flex;
+      align-items: baseline;
+      letter-spacing: 0.02em;
+      font-weight: 700;
+      color: #f5ede6;
+    }
+
+    .bookend-mn .bk-edge {
+      color: #fce6be;
+      text-shadow: 0 0 11px rgba(223, 177, 107, 0.42);
+      font-weight: 800;
+    }
+
+    .bookend-mn .bk-sep {
+      color: rgba(223, 177, 107, 0.55);
+      margin: 0 5px;
+      font-weight: 400;
+    }
+
+    /* MOTIF 3: Minimalist Gold Morse-Code Micro-Ornament (-- -.) */
+    .morse-micro-badge {
+      display: inline-block;
+      width: 44px;
+      height: 8px;
+      vertical-align: middle;
+      opacity: 0.85;
+    }
+
+    .morse-ticket-divider {
+      display: block;
+      width: 100%;
+      height: 11px;
+      margin: 4px 0 6px;
+      pointer-events: none;
+    }
+
+    /* =========================================================================
+       7. STEP 1: FOCAL POMEGRANATE GREETING + 3-COLUMN 180° 3D FLIP CARDS
+       ========================================================================= */
+    .step1-stack {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: clamp(8px, 1.5vh, 12px);
+    }
+
+    .hero-card {
+      position: relative;
+      padding: clamp(10px, 1.6vh, 15px) clamp(12px, 2.2vw, 18px);
+      border-radius: 18px;
+      background: linear-gradient(142deg, rgba(166, 28, 49, 0.28) 0%, rgba(15, 9, 20, 0.68) 60%, rgba(59, 105, 152, 0.22) 100%);
+      border: 1px solid rgba(223, 177, 107, 0.3);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2);
+      text-align: center;
+    }
+
+    .hero-top-focal {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 6px;
+    }
+
+    .focal-pomegranate-halo {
+      width: clamp(44px, 5.8vw, 52px);
+      height: clamp(44px, 5.8vw, 52px);
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(220, 38, 69, 0.36) 0%, rgba(223, 177, 107, 0.1) 64%, transparent 100%);
+      border: 1px solid rgba(223, 177, 107, 0.45);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      box-shadow: 0 0 24px -5px rgba(166, 28, 49, 0.78);
+      animation: haloBreath 4.6s ease-in-out infinite;
+    }
+
+    @keyframes haloBreath {
+      0%, 100% { box-shadow: 0 0 20px -6px rgba(166, 28, 49, 0.72), 0 0 10px -4px rgba(223, 177, 107, 0.28); }
+      50% { box-shadow: 0 0 28px -4px rgba(220, 38, 69, 0.85), 0 0 16px -3px rgba(223, 177, 107, 0.45); }
+    }
+
+    .assoc-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 4px 12px;
+      border-radius: 999px;
+      background: rgba(223, 177, 107, 0.13);
+      border: 1px solid rgba(223, 177, 107, 0.4);
+      color: var(--gold-bright);
+      font-size: clamp(0.65rem, 1.72vw, 0.75rem);
+      font-weight: 700;
+    }
+
+    .hero-heading {
+      font-size: clamp(0.95rem, 2.7vw, 1.26rem);
+      font-weight: 800;
+      color: var(--text-main);
+      line-height: 1.35;
+      margin-bottom: 4px;
+    }
+
+    .hero-copy {
+      font-size: clamp(0.71rem, 1.82vw, 0.81rem);
+      color: var(--text-soft);
+      font-weight: 300;
+      max-width: 520px;
+      margin: 0 auto 9px;
+      line-height: 1.5;
+    }
+
+    .meta-pills {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .meta-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: rgba(11, 7, 12, 0.56);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      font-size: clamp(0.64rem, 1.65vw, 0.75rem);
+      color: var(--text-main);
+      font-weight: 500;
+    }
+
+    /* Persistent 3-column horizontal row even at 360px mobile */
+    .flip-row {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: clamp(6px, 1.5vw, 12px);
+      flex: 1 1 auto;
+      min-height: clamp(128px, 23vh, 172px);
+    }
+
+    .flip-card {
+      perspective: 1100px;
+      cursor: pointer;
+      outline: none;
+      height: 100%;
+    }
+
+    .flip-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      display: grid;
+      transform-style: preserve-3d;
+      -webkit-transform-style: preserve-3d;
+      transition: transform 0.64s var(--ease-flip);
+      transform: translateZ(0);
+    }
+
+    .flip-card.is-flipped .flip-inner {
+      transform: rotateY(180deg) translateZ(0);
+    }
+
+    @media (hover: hover) and (pointer: fine) {
+      .flip-card:hover .flip-inner {
+        transform: rotateY(180deg) translateZ(0);
+      }
+      .flip-card.is-flipped:hover .flip-inner {
+        transform: rotateY(0deg) translateZ(0);
+      }
+    }
+
+    .flip-face {
+      grid-area: 1 / 1;
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+      border-radius: clamp(13px, 2vw, 18px);
+      padding: clamp(8px, 1.6vh, 13px) clamp(5px, 1.2vw, 11px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      position: relative;
+    }
+
+    .flip-front {
+      transform: rotateY(0deg) translateZ(1px);
+      background: linear-gradient(155deg, rgba(255, 255, 255, 0.09) 0%, rgba(255, 255, 255, 0.025) 100%);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 10px 24px -12px rgba(0, 0, 0, 0.6);
+    }
+
+    .flip-back {
+      transform: rotateY(180deg) translateZ(1px);
+      background: linear-gradient(148deg, rgba(166, 28, 49, 0.44) 0%, rgba(17, 9, 18, 0.95) 100%);
+      border: 1px solid rgba(223, 177, 107, 0.56);
+      box-shadow: inset 0 1px 0 rgba(250, 227, 187, 0.28), 0 12px 26px -12px rgba(166, 28, 49, 0.55);
+    }
+
+    .flip-mark {
+      position: absolute;
+      top: 6px;
+      left: 7px;
+      font-size: clamp(0.62rem, 1.5vw, 0.74rem);
+      color: var(--gold);
+      opacity: 0.8;
+    }
+
+    .flip-icon {
+      font-size: clamp(1.1rem, 2.7vw, 1.5rem);
+      line-height: 1;
+      margin-bottom: clamp(4px, 0.9vh, 8px);
+    }
+
+    .flip-title {
+      font-size: clamp(0.7rem, 1.95vw, 0.9rem);
+      font-weight: 800;
+      color: var(--gold-bright);
+      margin-bottom: 3px;
+      line-height: 1.25;
+    }
+
+    .flip-val {
+      font-size: clamp(0.61rem, 1.7vw, 0.78rem);
+      color: var(--text-main);
+      font-weight: 600;
+      line-height: 1.4;
+    }
+
+    .flip-detail {
+      font-size: clamp(0.58rem, 1.6vw, 0.75rem);
+      color: #fff6ee;
+      line-height: 1.5;
+      font-weight: 400;
+    }
+
+    .flip-cue {
+      text-align: center;
+      font-size: clamp(0.64rem, 1.6vw, 0.74rem);
+      color: var(--text-muted);
+    }
+
+    .full-banner {
+      display: none;
+      padding: 8px 12px;
+      border-radius: 13px;
+      background: rgba(166, 28, 49, 0.32);
+      border: 1px solid rgba(220, 38, 69, 0.62);
+      color: #ffe4ea;
+      font-size: clamp(0.73rem, 1.85vw, 0.84rem);
+      font-weight: 700;
+      text-align: center;
+      backdrop-filter: blur(10px);
+    }
+    .full-banner.is-visible { display: block; }
+
+    /* =========================================================================
+       8. FORM CONTROLS (STEP 2 & STEP 3) — COMPACT GLASS + iOS 16PX SAFE
+       ========================================================================= */
+    .panel-head {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 4px 10px;
+      margin-bottom: 9px;
+    }
+
+    .panel-title {
+      font-size: clamp(0.9rem, 2.25vw, 1.05rem);
+      font-weight: 800;
+      color: var(--text-main);
+    }
+
+    .panel-note {
+      font-size: clamp(0.68rem, 1.7vw, 0.77rem);
+      color: var(--text-soft);
+    }
+
+    .inline-err {
+      display: none;
+      align-items: center;
+      gap: 7px;
+      padding: 8px 12px;
+      border-radius: 12px;
+      background: rgba(166, 28, 49, 0.34);
+      border: 1px solid rgba(220, 38, 69, 0.62);
+      color: #ffe4ea;
+      font-size: 0.78rem;
+      font-weight: 600;
+      margin-bottom: 9px;
+    }
+    .inline-err.is-visible { display: flex; }
+
+    .shake-it { animation: errShake 0.35s ease; }
+    @keyframes errShake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-6px); }
+      50% { transform: translateX(6px); }
+      75% { transform: translateX(-3px); }
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 9px;
+      margin-bottom: 9px;
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+      margin-bottom: 9px;
+    }
+    .grid-2 .field { margin-bottom: 0; }
+
+    .field-label {
+      font-size: clamp(0.71rem, 1.75vw, 0.79rem);
+      font-weight: 600;
+      color: var(--text-main);
+      margin-bottom: 4px;
+    }
+
+    .req { color: var(--ruby-bright); margin-right: 2px; }
+
+    .g-input, .g-textarea {
+      width: 100%;
+      min-height: 40px;
+      padding: 8px 11px;
+      border-radius: 12px;
+      background: rgba(10, 6, 13, 0.56);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      color: var(--text-main);
+      font-family: inherit;
+      font-size: 0.85rem;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+    }
+
+    .g-textarea {
+      min-height: 52px;
+      resize: none;
+      line-height: 1.5;
+    }
+
+    .g-input::placeholder, .g-textarea::placeholder {
+      color: rgba(158, 141, 150, 0.68);
+    }
+
+    .g-input:focus, .g-textarea:focus {
+      outline: none;
+      border-color: var(--gold);
+      background: rgba(10, 6, 13, 0.78);
+      box-shadow: 0 0 0 3px rgba(223, 177, 107, 0.18);
+    }
+
+    .g-input.is-invalid {
+      border-color: var(--ruby-bright);
+      box-shadow: 0 0 0 3px rgba(220, 38, 69, 0.24);
+    }
+
+    .ltr {
+      direction: ltr;
+      text-align: left;
+    }
+
+    /* Guest Stepper */
+    .guest-box {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 6px;
+      min-height: 40px;
+      padding: 3px 7px;
+      border-radius: 12px;
+      background: rgba(10, 6, 13, 0.56);
+      border: 1px solid rgba(223, 177, 107, 0.36);
+    }
+
+    .stepper-pair {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .qty-btn {
+      width: 32px;
+      height: 32px;
+      border-radius: 9px;
+      background: rgba(255, 255, 255, 0.09);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      color: var(--text-main);
+      font-size: 1.1rem;
+      font-weight: 800;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.18s ease;
+    }
+
+    .qty-btn:hover:not(:disabled) {
+      background: rgba(166, 28, 49, 0.72);
+      border-color: var(--gold);
+    }
+    .qty-btn:disabled { opacity: 0.32; cursor: not-allowed; }
+
+    .qty-val {
+      min-width: 22px;
+      text-align: center;
+      font-size: 0.96rem;
+      font-weight: 800;
+    }
+
+    .fee-pill {
+      padding: 3px 10px;
+      border-radius: 9px;
+      background: linear-gradient(135deg, rgba(166, 28, 49, 0.44), rgba(223, 177, 107, 0.24));
+      border: 1px solid rgba(223, 177, 107, 0.5);
+      color: var(--gold-bright);
+      font-size: 0.82rem;
+      font-weight: 800;
+      direction: ltr;
+      transition: transform 0.2s var(--ease-flip);
+      white-space: nowrap;
+    }
+    .fee-pill.pop { transform: scale(1.12); }
+
+    /* Radio Cards */
+    .radio-grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 7px;
+    }
+
+    .radio-grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 7px;
+    }
+
+    .r-card {
+      position: relative;
+      display: block;
+      cursor: pointer;
+    }
+
+    .r-card input {
+      position: absolute;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .r-face {
+      min-height: 42px;
+      height: 100%;
+      padding: 7px 8px;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.045);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      font-size: clamp(0.67rem, 1.75vw, 0.77rem);
+      font-weight: 600;
+      color: var(--text-soft);
+      line-height: 1.38;
+      transition: all 0.22s ease;
+    }
+
+    .r-card:hover .r-face {
+      background: rgba(255, 255, 255, 0.085);
+      border-color: rgba(223, 177, 107, 0.42);
+    }
+
+    .r-card input:checked + .r-face {
+      background: linear-gradient(145deg, rgba(166, 28, 49, 0.42), rgba(223, 177, 107, 0.2));
+      border-color: var(--gold);
+      color: var(--text-main);
+      box-shadow: 0 0 16px -6px rgba(223, 177, 107, 0.62);
+    }
+
+    .r-sub {
+      font-size: clamp(0.6rem, 1.5vw, 0.68rem);
+      font-weight: 400;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    .r-card input:checked + .r-face .r-sub { color: var(--gold-bright); }
+
+    /* Collapsible Gold-Bordered Online Payment Drawer */
+    .pay-drawer {
+      display: grid;
+      grid-template-rows: 0fr;
+      opacity: 0;
+      margin-bottom: 0;
+      transition: grid-template-rows 0.34s var(--ease-stage), opacity 0.26s ease, margin-bottom 0.28s ease;
+    }
+    .pay-drawer.is-open {
+      grid-template-rows: 1fr;
+      opacity: 1;
+      margin-bottom: 9px;
+    }
+    .pay-drawer-inner { overflow: hidden; }
+
+    .pay-panel {
+      padding: 9px 11px;
+      border-radius: 14px;
+      background: linear-gradient(148deg, rgba(223, 177, 107, 0.14), rgba(10, 6, 13, 0.66));
+      border: 1px solid rgba(223, 177, 107, 0.44);
+    }
+
+    .pay-panel-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 7px;
+      padding-bottom: 5px;
+      border-bottom: 1px solid rgba(223, 177, 107, 0.2);
+    }
+
+    .pay-panel-tag {
+      font-size: 0.7rem;
+      color: var(--text-soft);
+      font-weight: 600;
+    }
+
+    .pay-bookend-pill {
+      padding: 2px 10px;
+      border-radius: 999px;
+      background: rgba(10, 6, 13, 0.56);
+      border: 1px solid rgba(223, 177, 107, 0.34);
+      font-size: 0.76rem;
+    }
+
+    .copy-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 7px;
+      margin-bottom: 6px;
+    }
+
+    .copy-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 6px;
+      padding: 5px 8px;
+      border-radius: 10px;
+      background: rgba(10, 6, 13, 0.58);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      min-width: 0;
+    }
+
+    .copy-meta { min-width: 0; }
+    .copy-lbl { display: block; font-size: 0.62rem; color: var(--text-muted); }
+    .copy-code {
+      display: block;
+      font-size: clamp(0.68rem, 1.7vw, 0.77rem);
+      font-weight: 700;
+      color: var(--text-main);
+      direction: ltr;
+      text-align: left;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .copy-btn {
+      padding: 4px 8px;
+      border-radius: 8px;
+      background: rgba(223, 177, 107, 0.22);
+      border: 1px solid rgba(223, 177, 107, 0.48);
+      color: var(--gold-bright);
+      font-family: inherit;
+      font-size: 0.69rem;
+      font-weight: 700;
+      cursor: pointer;
+      flex-shrink: 0;
+      transition: background 0.2s ease;
+    }
+    .copy-btn:hover { background: rgba(223, 177, 107, 0.38); }
+
+    .pay-hint {
+      font-size: 0.69rem;
+      color: var(--gold-bright);
+      margin-bottom: 6px;
+      opacity: 0.92;
+    }
+
+    /* Volunteering Multi-select Pills */
+    .v-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .v-pill {
+      position: relative;
+      display: inline-block;
+      cursor: pointer;
+    }
+    .v-pill input {
+      position: absolute;
+      opacity: 0;
+      pointer-events: none;
+    }
+    .v-pill-face {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 5px 10px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      color: var(--text-soft);
+      font-size: clamp(0.66rem, 1.7vw, 0.74rem);
+      font-weight: 600;
+      transition: all 0.2s ease;
+    }
+    .v-pill input:checked + .v-pill-face {
+      background: rgba(223, 177, 107, 0.24);
+      border-color: var(--gold);
+      color: var(--gold-bright);
+      box-shadow: 0 0 12px -4px rgba(223, 177, 107, 0.55);
+    }
+
+    /* =========================================================================
+       9. STEP 4: DOUBLE-SIDED 3D HOLOGRAPHIC DIGITAL TICKET
+       ========================================================================= */
+    .ticket-wrap {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .ticket-scene {
+      width: 100%;
+      max-width: 540px;
+      perspective: 1400px;
+      cursor: pointer;
+      outline: none;
+    }
+
+    .ticket-inner {
+      position: relative;
+      width: 100%;
+      display: grid;
+      transform-style: preserve-3d;
+      -webkit-transform-style: preserve-3d;
+      transition: transform 0.72s var(--ease-flip);
+      transform: translateZ(0);
+    }
+
+    .ticket-scene.is-flipped .ticket-inner {
+      transform: rotateY(180deg) translateZ(0);
+    }
+
+    .ticket-face {
+      grid-area: 1 / 1;
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+      border-radius: 22px;
+      padding: clamp(12px, 2.2vh, 18px) clamp(14px, 2.6vw, 22px);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      border: 1px solid rgba(223, 177, 107, 0.56);
+      box-shadow:
+        0 24px 54px -14px rgba(0, 0, 0, 0.78),
+        0 0 38px -10px rgba(223, 177, 107, 0.34),
+        inset 0 1px 0 rgba(255, 255, 255, 0.32);
+    }
+
+    .ticket-face::before {
+      content: '';
+      position: absolute;
+      inset: -45%;
+      background: conic-gradient(
+        from 115deg at 50% 50%,
+        rgba(223, 177, 107, 0.14),
+        rgba(156, 212, 250, 0.12),
+        rgba(220, 38, 69, 0.16),
+        rgba(255, 255, 255, 0.14),
+        rgba(223, 177, 107, 0.14)
+      );
+      opacity: 0.55;
+      pointer-events: none;
+      animation: holoRotate 14s linear infinite;
+    }
+    @keyframes holoRotate {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    .ticket-front {
+      transform: rotateY(0deg) translateZ(1px);
+      background: linear-gradient(146deg, rgba(148, 22, 46, 0.64) 0%, rgba(15, 9, 22, 0.95) 56%, rgba(42, 16, 28, 0.92) 100%);
+    }
+
+    .ticket-back {
+      transform: rotateY(180deg) translateZ(1px);
+      background: linear-gradient(146deg, rgba(20, 18, 36, 0.96) 0%, rgba(14, 8, 19, 0.98) 58%, rgba(88, 18, 35, 0.84) 100%);
+    }
+
+    .ticket-body { position: relative; z-index: 2; }
+
+    .ticket-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 4px;
+    }
+
+    .ticket-code {
+      padding: 5px 12px;
+      border-radius: 11px;
+      background: rgba(223, 177, 107, 0.18);
+      border: 1px solid rgba(223, 177, 107, 0.64);
+      color: var(--gold-bright);
+      font-size: clamp(0.84rem, 2.25vw, 1.02rem);
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      direction: ltr;
+      flex-shrink: 0;
+    }
+
+    .ticket-guilloche {
+      display: block;
+      width: 100%;
+      height: 15px;
+      margin: 2px 0 6px;
+      pointer-events: none;
+    }
+
+    .ticket-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 7px;
+      margin-bottom: 8px;
+    }
+
+    .t-box {
+      padding: 6px 10px;
+      border-radius: 11px;
+      background: rgba(10, 6, 13, 0.56);
+      border: 1px solid rgba(255, 255, 255, 0.11);
+    }
+    .t-box.full { grid-column: 1 / -1; }
+    .t-k { display: block; font-size: 0.64rem; color: var(--text-muted); }
+    .t-v { display: block; font-size: clamp(0.75rem, 1.9vw, 0.85rem); font-weight: 700; color: var(--text-main); }
+
+    .email-pill {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 6px 10px;
+      border-radius: 11px;
+      background: rgba(52, 211, 153, 0.16);
+      border: 1px solid rgba(52, 211, 153, 0.44);
+      color: #a7f3d0;
+      font-size: clamp(0.68rem, 1.75vw, 0.77rem);
+      font-weight: 700;
+      text-align: center;
+    }
+    .email-pill.is-demo {
+      background: rgba(223, 177, 107, 0.16);
+      border-color: rgba(223, 177, 107, 0.48);
+      color: var(--gold-bright);
+    }
+
+    .ticket-list {
+      list-style: none;
+      display: grid;
+      gap: 6px;
+      margin-bottom: 8px;
+    }
+    .ticket-list li {
+      padding: 6px 10px;
+      border-radius: 10px;
+      background: rgba(10, 6, 13, 0.56);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      font-size: clamp(0.69rem, 1.75vw, 0.78rem);
+      color: var(--text-main);
+    }
+
+    .ticket-cue {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      font-size: 0.7rem;
+      color: var(--gold-bright);
+      opacity: 0.9;
+      margin-top: 4px;
+    }
+
+    .ticket-btns {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    /* =========================================================================
+       10. PINNED FOOTER NAVIGATION BAR (HIDDEN ON STEP 4)
+       ========================================================================= */
+    .card-footer {
+      position: relative;
+      z-index: 6;
+      flex: 0 0 auto;
+      padding: clamp(9px, 1.4vh, 12px) clamp(12px, 2.6vw, 20px);
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      background: linear-gradient(0deg, rgba(10, 6, 13, 0.48) 0%, transparent 100%);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+    .card-footer.is-hidden { display: none; }
+    .card-footer.is-centered { justify-content: center; }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      min-height: 42px;
+      padding: 9px clamp(16px, 3vw, 24px);
+      border-radius: 13px;
+      border: 1px solid rgba(250, 227, 187, 0.56);
+      background: linear-gradient(118deg, #98152e 0%, #c01e3a 52%, #cf9844 100%);
+      color: #ffffff;
+      font-family: inherit;
+      font-size: clamp(0.79rem, 2.05vw, 0.89rem);
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: 0 10px 26px -8px rgba(166, 28, 49, 0.72), inset 0 1px 0 rgba(255, 255, 255, 0.34);
+      transition: transform 0.18s ease, filter 0.18s ease, opacity 0.2s ease;
+      white-space: nowrap;
+    }
+    .btn-primary:hover:not(:disabled) { transform: translateY(-1px); filter: brightness(1.08); }
+    .btn-primary:active:not(:disabled) { transform: scale(0.97); }
+    .btn-primary:disabled { opacity: 0.45; cursor: not-allowed; filter: grayscale(0.3); }
+    .btn-primary.wide { width: 100%; max-width: 320px; }
+
+    .btn-ghost {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      min-height: 42px;
+      padding: 9px clamp(12px, 2.4vw, 18px);
+      border-radius: 13px;
+      background: rgba(255, 255, 255, 0.065);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      color: var(--text-soft);
+      font-family: inherit;
+      font-size: clamp(0.75rem, 1.95vw, 0.84rem);
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+    .btn-ghost:hover {
+      background: rgba(255, 255, 255, 0.12);
+      border-color: rgba(223, 177, 107, 0.48);
+      color: var(--text-main);
+    }
+
+    .btn-spin {
+      width: 15px;
+      height: 15px;
+      border-radius: 50%;
+      border: 2.5px solid rgba(255, 255, 255, 0.3);
+      border-top-color: #ffffff;
+      animation: spinBtn 0.7s linear infinite;
+      display: none;
+    }
+    .btn-primary.is-loading .btn-spin { display: inline-block; }
+    @keyframes spinBtn { to { transform: rotate(360deg); } }
+
+    .hidden { display: none !important; }
+
+    /* =========================================================================
+       11. MOBILE & TABLET PARITY (iOS 16PX SAFE, IDENTICAL FLOATING CARD FRAME)
+       ========================================================================= */
+    @media (hover: none), (max-width: 640px) {
+      .g-input, .g-textarea {
+        font-size: 16px; /* Prevents iOS Safari auto-zoom on input focus */
+      }
+      .snow-text { display: none; }
+    }
+
+    @media (max-width: 560px) {
+      .grid-2, .copy-grid {
+        grid-template-columns: 1fr;
+      }
+      .step-btn { padding: 3px 2px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .orb, .shamseh-svg, .glass-sheen::before, .ticket-face::before, .star-twinkle, .star-twinkle-slow, .star-twinkle-alt, .constellation-glow, .focal-pomegranate-halo {
+        animation: none !important;
+      }
+      .glass-card { transform: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Shared Hidden SVG Defs: Gradients + Luxury Botanical Pomegranate + Morse Ornament + Guilloché Wave -->
+  <svg style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true">
+    <defs>
+      <!-- Pomegranate Luxury Ruby & Gold Gradients -->
+      <radialGradient id="pomRubyShell" cx="38%" cy="32%" r="68%">
+        <stop offset="0%" stop-color="#df294b" />
+        <stop offset="48%" stop-color="#9e142d" />
+        <stop offset="100%" stop-color="#400715" />
+      </radialGradient>
+
+      <radialGradient id="pomInnerChamber" cx="46%" cy="44%" r="60%">
+        <stop offset="0%" stop-color="#7c0c22" />
+        <stop offset="68%" stop-color="#480614" />
+        <stop offset="100%" stop-color="#2a030c" />
+      </radialGradient>
+
+      <linearGradient id="pomGold" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#fff0cc" />
+        <stop offset="48%" stop-color="#dfb16b" />
+        <stop offset="100%" stop-color="#b57d34" />
+      </linearGradient>
+
+      <linearGradient id="pomPith" x1="0%" y1="0%" x2="0%" y2="100%">
+        <stop offset="0%" stop-color="#fff5df" stop-opacity="0.92" />
+        <stop offset="55%" stop-color="#edd09a" stop-opacity="0.78" />
+        <stop offset="100%" stop-color="#c9954c" stop-opacity="0.72" />
+      </linearGradient>
+
+      <!-- Guilloché & Morse Line Gradients -->
+      <linearGradient id="goldGuilloche" x1="0%" y1="0%" x2="100%" y2="0%">
+        <stop offset="0%" stop-color="#dfb16b" stop-opacity="0" />
+        <stop offset="18%" stop-color="#dfb16b" stop-opacity="0.38" />
+        <stop offset="50%" stop-color="#fae3bb" stop-opacity="0.78" />
+        <stop offset="82%" stop-color="#dfb16b" stop-opacity="0.38" />
+        <stop offset="100%" stop-color="#dfb16b" stop-opacity="0" />
+      </linearGradient>
+
+      <linearGradient id="rubyGuilloche" x1="0%" y1="0%" x2="100%" y2="0%">
+        <stop offset="0%" stop-color="#dc2645" stop-opacity="0" />
+        <stop offset="25%" stop-color="#dc2645" stop-opacity="0.32" />
+        <stop offset="50%" stop-color="#ff8da4" stop-opacity="0.56" />
+        <stop offset="75%" stop-color="#dc2645" stop-opacity="0.32" />
+        <stop offset="100%" stop-color="#dc2645" stop-opacity="0" />
+      </linearGradient>
+
+      <!-- MOTIF 1: Luxury Botanical-Architectural Pomegranate Emblem (#iconPomegranateMN)
+           Hidden organically inside the fruit anatomy:
+           • Top 3-lobed pointed calyx crown & upper pith rib gently trace twin botanical 'M' arches.
+           • Lower cross-section seed-chamber walls + single organic diagonal septum vein trace an 'N'
+             surrounded by glistening multi-faceted ruby aril seeds. 100% luxury botanical art. -->
+      <symbol id="iconPomegranateMN" viewBox="0 0 80 80">
+        <!-- Sculpted outer crimson pomegranate shell -->
+        <circle cx="40" cy="49.5" r="23.5" fill="url(#pomRubyShell)" stroke="url(#pomGold)" stroke-width="1.65" />
+
+        <!-- Soft specular glass rim highlight on rind -->
+        <path d="M21 44 A20 20 0 0 1 36 29.5" fill="none" stroke="#fff4dd" stroke-opacity="0.34" stroke-width="1.1" stroke-linecap="round" />
+
+        <!-- Three-lobed pointed pomegranate calyx crown (natural twin-peak botanical M silhouette) -->
+        <path d="M27.2 29.6 L24.2 15.8 C29.4 19.8 34.4 22.8 40 24.1 C45.6 22.8 50.6 19.8 55.8 15.8 L52.8 29.6"
+              fill="none" stroke="url(#pomGold)" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" />
+        <!-- Central calyx sepal diamond & collar -->
+        <path d="M35.5 23.2 L40 12.6 L44.5 23.2" fill="none" stroke="url(#pomGold)" stroke-width="1.35" stroke-linejoin="round" stroke-opacity="0.88" />
+        <path d="M26 29.4 Q40 32.4 54 29.4" fill="none" stroke="url(#pomGold)" stroke-width="1.15" stroke-opacity="0.72" />
+
+        <!-- Open crimson interior cross-section (cut pomegranate heart) -->
+        <ellipse cx="40" cy="50" rx="17.8" ry="17.2" fill="url(#pomInnerChamber)" stroke="url(#pomPith)" stroke-width="0.95" stroke-opacity="0.65" />
+
+        <!-- Subtle radial pith micro-veins anchoring membranes organically to the rind -->
+        <path d="M22.6 46.5 L28 45.2 M57.4 46.5 L52 45.2 M40 32.8 L40 41.8 M31.8 61.5 L28.2 64.5 M48.2 61.5 L51.8 64.5"
+              fill="none" stroke="url(#pomPith)" stroke-width="0.75" stroke-opacity="0.45" stroke-linecap="round" />
+
+        <!-- Upper internal pale-gold botanical pith membrane (پرده بالایی انار: subtle arched M rib) -->
+        <path d="M27.4 44.8 C28.2 39.2 31.4 36.2 33.4 36.4 C35.6 36.6 38.4 40.6 40 42.3 C41.6 40.6 44.4 36.6 46.6 36.4 C48.6 36.2 51.8 39.2 52.6 44.8"
+              fill="none" stroke="url(#pomPith)" stroke-width="1.45" stroke-linecap="round" stroke-linejoin="round" />
+
+        <!-- Lower internal seed-chamber septum walls + diagonal pith vein (پرده پایینی انار: organic hidden N) -->
+        <path d="M31.6 61.4 C31.3 56.2 31.4 51.2 32.1 46.6 C36.9 51.6 43.1 56.4 47.9 61.1 C48.6 56.2 48.7 51.2 48.4 46.4"
+              fill="none" stroke="url(#pomPith)" stroke-width="1.45" stroke-linecap="round" stroke-linejoin="round" />
+
+        <!-- Glistening multi-faceted ruby aril seed clusters nestled inside the chambers -->
+        <!-- Left-lower aril pocket -->
+        <polygon points="35.3,54.8 38.1,57.5 35.3,60.3 32.5,57.5" fill="#ff5478" stroke="#ffd8e2" stroke-width="0.45" />
+        <polygon points="39.8,59.0 42.2,61.3 39.8,63.7 37.4,61.3" fill="#ff849f" opacity="0.92" />
+        <polygon points="27.2,52.6 29.6,55.0 27.2,57.4 24.8,55.0" fill="#e62d52" stroke="#ffb8c8" stroke-width="0.4" />
+        <polygon points="28.6,47.8 30.5,49.7 28.6,51.6 26.7,49.7" fill="#ff9eb4" opacity="0.82" />
+
+        <!-- Right-upper aril pocket -->
+        <polygon points="44.7,47.6 47.5,50.3 44.7,53.1 41.9,50.3" fill="#ff5c7e" stroke="#fae3bb" stroke-width="0.45" />
+        <polygon points="40.3,44.4 42.6,46.7 40.3,49.0 38.0,46.7" fill="#ffd9e2" opacity="0.92" />
+        <polygon points="52.8,52.4 55.1,54.8 52.8,57.2 50.5,54.8" fill="#e62d52" stroke="#ffb8c8" stroke-width="0.4" />
+        <polygon points="51.4,47.4 53.3,49.3 51.4,51.2 49.5,49.3" fill="#fae3bb" opacity="0.82" />
+
+        <!-- Upper crown-chamber glistening arils -->
+        <polygon points="34.2,39.4 36.2,41.4 34.2,43.4 32.2,41.4" fill="#ff7392" opacity="0.88" />
+        <polygon points="45.8,39.4 47.8,41.4 45.8,43.4 43.8,41.4" fill="#ff8ba5" opacity="0.88" />
+        <circle cx="35.3" cy="56.8" r="0.7" fill="#ffffff" opacity="0.8" />
+        <circle cx="44.7" cy="49.6" r="0.7" fill="#ffffff" opacity="0.8" />
+      </symbol>
+
+      <!-- MOTIF 3: Minimalist Luxury Gold Morse-Code Micro-Ornament ("-- -." for M & N) -->
+      <symbol id="morseOrnamentFull" viewBox="0 0 260 12" preserveAspectRatio="none">
+        <!-- Hairline wings -->
+        <line x1="0" y1="6" x2="90" y2="6" stroke="url(#goldGuilloche)" stroke-width="0.7" />
+        <line x1="170" y1="6" x2="260" y2="6" stroke="url(#goldGuilloche)" stroke-width="0.7" />
+        <!-- M (--): two sleek gold dashes -->
+        <rect x="98" y="4.8" width="13" height="2.4" rx="1.2" fill="#dfb16b" opacity="0.92" />
+        <rect x="115" y="4.8" width="13" height="2.4" rx="1.2" fill="#fae3bb" opacity="0.92" />
+        <!-- Center tiny ruby-gold diamond pin -->
+        <polygon points="133,4.2 134.8,6 133,7.8 131.2,6" fill="#dc2645" opacity="0.75" />
+        <!-- N (-.): one sleek gold dash + one jewel dot -->
+        <rect x="139" y="4.8" width="13" height="2.4" rx="1.2" fill="#fae3bb" opacity="0.92" />
+        <circle cx="158.2" cy="6" r="1.75" fill="#dfb16b" opacity="0.95" />
+      </symbol>
+
+      <!-- Compact Morse-Code Micro-Separator for Step 1 Badge ("-- -.") -->
+      <symbol id="morseMicro" viewBox="0 0 54 10">
+        <rect x="2" y="4" width="10" height="2" rx="1" fill="#dfb16b" />
+        <rect x="15" y="4" width="10" height="2" rx="1" fill="#fae3bb" />
+        <rect x="31" y="4" width="10" height="2" rx="1" fill="#fae3bb" />
+        <circle cx="46.5" cy="5" r="1.45" fill="#dfb16b" />
+      </symbol>
+
+      <!-- MOTIF 6: Ultra-Fine Banknote Guilloché Harmonic Security Wave -->
+      <symbol id="guillocheWaveMN" viewBox="0 0 600 22" preserveAspectRatio="none">
+        <path d="M0,11 C95,11 165,9.4 225,11.6 C248,12.4 256,16.5 270,13.5 C284,10.5 292,5.5 306,11 C320,16.5 330,13.2 346,8.8 C362,4.8 378,11.8 410,11.4 C465,10.8 525,11 600,11"
+              fill="none" stroke="url(#rubyGuilloche)" stroke-width="0.68" />
+        <path d="M0,11 C110,11 180,12.6 232,10.4 C249,9.6 259,5.8 273,9.2 C287,12.6 297,16.8 311,11.4 C325,6.2 336,8.8 352,13.6 C366,17.2 384,10.4 420,10.8 C475,11.4 535,11 600,11"
+              fill="none" stroke="url(#goldGuilloche)" stroke-width="0.58" opacity="0.52" />
+        <path d="M0,11 L212,11 C228,11 237,14.8 246,14.8 C253,14.8 258,5.6 266,5.6 C273,5.6 277,13.4 284,13.4 C291,13.4 295,5.6 302,5.6 C309,5.6 314,15.2 322,15.2 C329,15.2 334,6 341,6 C348,6 358,15.2 365,15.2 C372,15.2 377,6.4 384,6.4 C392,6.4 398,11 416,11 L600,11"
+              fill="none" stroke="url(#goldGuilloche)" stroke-width="0.92" stroke-linecap="round" />
+        <polygon points="300,9.5 302,11 300,12.5 298,11" fill="#fae3bb" opacity="0.65" />
+      </symbol>
+    </defs>
+  </svg>
+
+  <!-- 1. Ambient Liquid Light Orbs -->
+  <div class="ambient-orbs" aria-hidden="true">
+    <div class="orb orb-ruby"></div>
+    <div class="orb orb-gold"></div>
+    <div class="orb orb-aurora"></div>
+  </div>
+
+  <!-- 2. MOTIF 5: Realistic Multi-Layered Helsinki Winter Night Sky (46+ Stars + Deeply Camouflaged Tilted Asterisms) -->
+  <svg class="nordic-sky-svg" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+    <g>
+      <!-- Upper Nordic Sky (46 varied natural stars — zero obvious floating letters) -->
+      <circle cx="52" cy="64" r="1.0" fill="#d9eeff" opacity="0.38" />
+      <circle cx="118" cy="48" r="0.8" fill="#f6ebd9" opacity="0.32" />
+      <circle cx="196" cy="94" r="1.4" fill="#d9eeff" opacity="0.54" class="star-twinkle-slow" />
+      <circle cx="284" cy="58" r="0.9" fill="#f6ebd9" opacity="0.40" />
+      <circle cx="366" cy="112" r="1.2" fill="#d9eeff" opacity="0.44" class="star-twinkle" />
+      <circle cx="448" cy="42" r="0.8" fill="#d9eeff" opacity="0.34" />
+      <circle cx="536" cy="76" r="1.3" fill="#f6ebd9" opacity="0.48" class="star-twinkle-alt" />
+      <circle cx="628" cy="34" r="1.1" fill="#d9eeff" opacity="0.46" />
+      <circle cx="714" cy="68" r="0.9" fill="#f6ebd9" opacity="0.38" class="star-twinkle-slow" />
+      <circle cx="798" cy="29" r="1.4" fill="#d9eeff" opacity="0.50" />
+      <circle cx="886" cy="62" r="0.8" fill="#f6ebd9" opacity="0.36" />
+      <circle cx="972" cy="46" r="1.2" fill="#d9eeff" opacity="0.46" class="star-twinkle" />
+      <circle cx="1064" cy="88" r="1.0" fill="#f6ebd9" opacity="0.42" />
+      <circle cx="1158" cy="44" r="1.5" fill="#d9eeff" opacity="0.56" class="star-twinkle-alt" />
+      <circle cx="1248" cy="82" r="0.9" fill="#f6ebd9" opacity="0.38" />
+      <circle cx="1338" cy="54" r="1.3" fill="#d9eeff" opacity="0.52" class="star-twinkle-slow" />
+      <circle cx="1396" cy="118" r="0.8" fill="#f6ebd9" opacity="0.35" />
+
+      <!-- Mid-flanks & perimeter starfield -->
+      <circle cx="48" cy="342" r="1.1" fill="#d9eeff" opacity="0.40" />
+      <circle cx="96" cy="474" r="1.4" fill="#f6ebd9" opacity="0.46" class="star-twinkle" />
+      <circle cx="152" cy="596" r="0.9" fill="#d9eeff" opacity="0.36" />
+      <circle cx="64" cy="692" r="1.2" fill="#f6ebd9" opacity="0.42" class="star-twinkle-slow" />
+      <circle cx="238" cy="436" r="0.8" fill="#d9eeff" opacity="0.30" />
+      <circle cx="312" cy="674" r="1.1" fill="#f6ebd9" opacity="0.38" />
+      <circle cx="204" cy="744" r="0.7" fill="#d9eeff" opacity="0.32" />
+      <circle cx="1194" cy="214" r="1.2" fill="#d9eeff" opacity="0.44" class="star-twinkle-alt" />
+      <circle cx="1296" cy="196" r="0.8" fill="#f6ebd9" opacity="0.34" />
+      <circle cx="1364" cy="288" r="1.4" fill="#d9eeff" opacity="0.50" class="star-twinkle" />
+      <circle cx="1246" cy="344" r="0.9" fill="#f6ebd9" opacity="0.36" />
+      <circle cx="1392" cy="412" r="1.1" fill="#d9eeff" opacity="0.42" />
+      <circle cx="1384" cy="686" r="1.3" fill="#f6ebd9" opacity="0.44" class="star-twinkle-slow" />
+      <circle cx="1096" cy="272" r="0.8" fill="#f6ebd9" opacity="0.30" />
+
+      <!-- Lower winter horizon starfield -->
+      <circle cx="182" cy="816" r="1.0" fill="#d9eeff" opacity="0.36" />
+      <circle cx="344" cy="848" r="1.3" fill="#f6ebd9" opacity="0.40" class="star-twinkle" />
+      <circle cx="512" cy="862" r="0.8" fill="#d9eeff" opacity="0.32" />
+      <circle cx="678" cy="842" r="1.1" fill="#f6ebd9" opacity="0.36" />
+      <circle cx="854" cy="866" r="0.9" fill="#d9eeff" opacity="0.34" />
+      <circle cx="1028" cy="834" r="1.2" fill="#f6ebd9" opacity="0.42" class="star-twinkle-alt" />
+      <circle cx="1196" cy="846" r="0.8" fill="#d9eeff" opacity="0.34" />
+      <circle cx="1324" cy="818" r="1.1" fill="#f6ebd9" opacity="0.40" />
+      <circle cx="422" cy="804" r="0.7" fill="#f6ebd9" opacity="0.30" />
+      <circle cx="942" cy="810" r="0.8" fill="#d9eeff" opacity="0.32" />
+    </g>
+
+    <!-- Natural Zenith Star Arc -->
+    <g class="constellation-glow" stroke="#d9eeff" stroke-width="0.55" stroke-opacity="0.065" fill="none">
+      <polyline points="536,76 628,34 714,68 798,29" />
+      <line x1="628" y1="34" x2="588" y2="92" />
+    </g>
+    <circle cx="588" cy="92" r="0.75" fill="#d9eeff" opacity="0.35" />
+
+    <!-- Camouflaged Asterism A (Upper-Left Sky, tilted +26deg with natural decoy spurs) -->
+    <g class="constellation-glow" stroke="#d9eeff" stroke-width="0.55" stroke-opacity="0.072" fill="none">
+      <polyline points="78,228 134,154 166,214 228,176 242,272" />
+      <line x1="134" y1="154" x2="118" y2="48" />
+      <line x1="134" y1="154" x2="196" y2="94" />
+      <line x1="228" y1="176" x2="296" y2="148" />
+      <line x1="242" y1="272" x2="178" y2="332" />
+      <line x1="242" y1="272" x2="314" y2="298" />
+      <line x1="78" y1="228" x2="48" y2="342" />
+    </g>
+    <g>
+      <circle cx="78" cy="228" r="1.4" fill="#e4f3ff" opacity="0.54" class="star-twinkle" />
+      <circle cx="134" cy="154" r="1.8" fill="#f6ebd9" opacity="0.62" />
+      <circle cx="166" cy="214" r="1.3" fill="#d9eeff" opacity="0.52" class="star-twinkle-slow" />
+      <circle cx="228" cy="176" r="1.7" fill="#f6ebd9" opacity="0.60" class="star-twinkle-alt" />
+      <circle cx="242" cy="272" r="1.4" fill="#d9eeff" opacity="0.50" />
+      <circle cx="296" cy="148" r="1.1" fill="#d9eeff" opacity="0.40" />
+      <circle cx="178" cy="332" r="1.2" fill="#f6ebd9" opacity="0.42" />
+      <circle cx="314" cy="298" r="1.0" fill="#d9eeff" opacity="0.38" />
+    </g>
+
+    <!-- Camouflaged Asterism B (Lower-Right Sky, tilted -19deg with natural decoy spurs) -->
+    <g class="constellation-glow" stroke="#f6ebd9" stroke-width="0.55" stroke-opacity="0.072" fill="none">
+      <polyline points="1182,668 1146,554 1268,626 1236,508" />
+      <line x1="1146" y1="554" x2="1088" y2="494" />
+      <line x1="1236" y1="508" x2="1318" y2="462" />
+      <line x1="1236" y1="508" x2="1246" y2="344" />
+      <line x1="1268" y1="626" x2="1346" y2="574" />
+      <line x1="1182" y1="668" x2="1116" y2="724" />
+      <line x1="1268" y1="626" x2="1384" y2="686" />
+    </g>
+    <g>
+      <circle cx="1182" cy="668" r="1.4" fill="#f6ebd9" opacity="0.52" class="star-twinkle-alt" />
+      <circle cx="1146" cy="554" r="1.7" fill="#d9eeff" opacity="0.60" />
+      <circle cx="1268" cy="626" r="1.5" fill="#f6ebd9" opacity="0.56" class="star-twinkle" />
+      <circle cx="1236" cy="508" r="1.8" fill="#d9eeff" opacity="0.62" class="star-twinkle-slow" />
+      <circle cx="1088" cy="494" r="1.1" fill="#d9eeff" opacity="0.40" />
+      <circle cx="1318" cy="462" r="1.2" fill="#f6ebd9" opacity="0.42" />
+      <circle cx="1346" cy="574" r="1.0" fill="#d9eeff" opacity="0.38" />
+      <circle cx="1116" cy="724" r="1.1" fill="#f6ebd9" opacity="0.40" />
+    </g>
+  </svg>
+
+  <!-- 3. MOTIF 4: Slowly Rotating Golden Persian Shamseh with 12-Fold Banna'i / Kufic Brickwork Ring -->
+  <div class="shamseh-stage" aria-hidden="true">
+    <svg class="shamseh-svg" viewBox="0 0 400 400" fill="none">
+      <defs>
+        <g id="bannaiTileMN" stroke="currentColor" stroke-width="1.45" stroke-linecap="square" stroke-linejoin="miter">
+          <path d="M167,69 L173,69 L173,54 L181,62 L189,54 L189,69 L197,69 L197,59 L203,59 L203,54 L217,68 L217,54 L225,54 L225,69 L233,69" />
+          <path d="M173,50 L189,50 M203,50 L217,50" stroke-opacity="0.55" stroke-width="0.9" />
+          <rect x="180" y="65.5" width="1.8" height="1.8" fill="currentColor" stroke="none" />
+          <rect x="208.5" y="48.5" width="1.8" height="1.8" fill="currentColor" stroke="none" />
+        </g>
+      </defs>
+
+      <circle cx="200" cy="200" r="192" stroke="currentColor" stroke-width="0.9" stroke-dasharray="3 6" />
+      <circle cx="200" cy="200" r="176" stroke="currentColor" stroke-width="0.7" stroke-opacity="0.65" />
+      <circle cx="200" cy="200" r="154" stroke="currentColor" stroke-width="1.0" />
+      <circle cx="200" cy="200" r="127" stroke="currentColor" stroke-width="1.0" />
+
+      <g>
+        <use href="#bannaiTileMN" transform="rotate(0 200 200)" />
+        <use href="#bannaiTileMN" transform="rotate(30 200 200)" />
+        <use href="#bannaiTileMN" transform="rotate(60 200 200)" />
+        <use href="#bannaiTileMN" transform="rotate(90 200 200)" />
+        <use href="#bannaiTileMN" transform="rotate(120 200 200)" />
+        <use href="#bannaiTileMN" transform="rotate(150 200 200)" />
+        <use href="#bannaiTileMN" transform="rotate(180 200 200)" />
+        <use href="#bannaiTileMN" transform="rotate(210 200 200)" />
+        <use href="#bannaiTileMN" transform="rotate(240 200 200)" />
+        <use href="#bannaiTileMN" transform="rotate(270 200 200)" />
+        <use href="#bannaiTileMN" transform="rotate(300 200 200)" />
+        <use href="#bannaiTileMN" transform="rotate(330 200 200)" />
+      </g>
+
+      <g stroke="currentColor" stroke-width="0.95">
+        <polygon points="200,76 218,133 262,93 249,151 307,138 267,182 324,200 267,218 307,262 249,249 262,307 218,267 200,324 182,267 138,307 151,249 93,262 133,218 76,200 133,182 93,138 151,151 138,93 182,133" />
+        <polygon points="200,104 224,140 268,132 260,176 296,200 260,224 268,268 224,260 200,296 176,260 132,268 140,224 104,200 140,176 132,132 176,140" stroke-opacity="0.65" />
+        <circle cx="200" cy="200" r="56" stroke-dasharray="2 4" />
+        <circle cx="200" cy="200" r="28" />
+      </g>
+    </svg>
+  </div>
+
+  <!-- 4. Interactive Snowfall + Step 4 Ruby & Gold Sparkle Canvas -->
+  <canvas id="fxCanvas" aria-hidden="true"></canvas>
+
+  <!-- =========================================================================
+       5. CENTERED FLOATING 3D LIQUID GLASSMORPHISM CARD STAGE
+       ========================================================================= -->
+  <main class="stage-shell">
+    <section id="glassCard" class="glass-card" aria-label="ثبت‌نام جشن شب یلدا ۱۴۰۵ هلسینکی">
+      <div class="glass-sheen" aria-hidden="true"></div>
+
+      <!-- PINNED HEADER -->
+      <header class="card-header">
+        <div class="header-top">
+          <div class="brand-group">
+            <!-- MOTIF 1 (Header): Botanical-Architectural Pomegranate Emblem -->
+            <div class="emblem-frame" aria-hidden="true">
+              <svg width="32" height="32" viewBox="0 0 80 80">
+                <use href="#iconPomegranateMN" />
+              </svg>
+            </div>
+            <div class="brand-copy">
+              <h1 class="brand-title" id="uiTitle">جشن شب یلدا ۱۴۰۵ | هلسینکی</h1>
+              <p class="brand-sub" id="uiAssocHeader">انجمن فرهنگی ایرانیان هلسینکی</p>
+            </div>
+          </div>
+
+          <div class="header-controls">
+            <!-- Live Capacity Progress Pill -->
+            <div id="capPill" class="capacity-pill" aria-live="polite">
+              <div class="cap-row">
+                <span class="cap-dot"></span>
+                <span id="capLabel">۵۳ صندلی باقی‌مانده از ۸۰</span>
+              </div>
+              <div class="cap-track">
+                <div id="capBar" class="cap-fill"></div>
+              </div>
+            </div>
+
+            <!-- Snowfall Toggle Button -->
+            <button type="button" id="snowBtn" class="snow-toggle" aria-pressed="true" title="کنترل بارش برف">
+              <span aria-hidden="true">❄</span>
+              <span class="snow-text">برف</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Compact 4-Step Progress Stepper -->
+        <nav class="stepper-bar" aria-label="مراحل ثبت‌نام">
+          <button type="button" class="step-btn is-active" data-step="1">
+            <span class="step-num">۱</span>
+            <span>دعوت‌نامه</span>
+          </button>
+          <button type="button" class="step-btn" data-step="2">
+            <span class="step-num">۲</span>
+            <span>مشخصات</span>
+          </button>
+          <button type="button" class="step-btn" data-step="3">
+            <span class="step-num">۳</span>
+            <span>پرداخت</span>
+          </button>
+          <button type="button" class="step-btn" data-step="4">
+            <span class="step-num">۴</span>
+            <span>بلیت</span>
+          </button>
+        </nav>
+
+        <!-- MOTIF 6 (Header Divider): Ultra-Fine Guilloché Harmonic Security Wave -->
+        <svg class="guilloche-divider" viewBox="0 0 600 22" preserveAspectRatio="none" aria-hidden="true">
+          <use href="#guillocheWaveMN" />
+        </svg>
+      </header>
+
+      <!-- 3D PERSPECTIVE STAGE VIEWPORT -->
+      <div class="stage-viewport" id="stepViewport">
+
+        <!-- ==================== STEP 1: دعوت‌نامه ==================== -->
+        <section id="panel-1" class="step-panel is-active" aria-label="دعوت‌نامه و جزئیات">
+          <div class="step1-stack">
+            <div class="hero-card">
+              <div class="hero-top-focal">
+                <!-- MOTIF 1 (Hero Focal Emblem): Botanical-Architectural Pomegranate -->
+                <div class="focal-pomegranate-halo" aria-hidden="true">
+                  <svg width="38" height="38" viewBox="0 0 80 80">
+                    <use href="#iconPomegranateMN" />
+                  </svg>
+                </div>
+                <span class="assoc-pill">
+                  <span id="uiAssocHero">انجمن فرهنگی ایرانیان هلسینکی</span>
+                  <!-- MOTIF 3 (Step 1 Badge Micro-Ornament): Gold Morse Code (-- -.) -->
+                  <svg class="morse-micro-badge" viewBox="0 0 54 10" aria-hidden="true">
+                    <use href="#morseMicro" />
+                  </svg>
+                </span>
+              </div>
+
+              <h2 class="hero-heading">در بلندترین شب زمستان شمال، کنار هم یلدا را جشن می‌گیریم</h2>
+              <p class="hero-copy">
+                دورهمی صمیمی شب یلدای ۱۴۰۵ در هلسینکی با اکران فیلم ویژه، چای داغ و تنقلات یلدایی.
+              </p>
+
+              <div class="meta-pills">
+                <span class="meta-pill">📅 <span id="uiDate">شنبه ۲۸ آذر ۱۴۰۵ (۱۹ دسامبر ۲۰۲۶)</span></span>
+                <span class="meta-pill">📍 <span id="uiVenue">هلسینکی — [نام سالن و آدرس دقیق]</span></span>
+                <span class="meta-pill">🎬 <span id="uiFilm">اکران فیلم ویژه (۱۶:۰۰ تا ۱۷:۴۵)</span></span>
+              </div>
+            </div>
+
+            <!-- Persistent 3-Column 180° 3D Flip Cards Row (Identical on Desktop, Tablet & 360px Mobile) -->
+            <div class="flip-row" aria-label="کارت‌های جزئیات مراسم">
+              <!-- Card 1: زمان‌بندی -->
+              <div class="flip-card" tabindex="0" role="button" aria-pressed="false" aria-label="زمان‌بندی مراسم">
+                <div class="flip-inner">
+                  <div class="flip-face flip-front">
+                    <span class="flip-mark" aria-hidden="true">↻</span>
+                    <div class="flip-icon" aria-hidden="true">🕒</div>
+                    <div class="flip-title">زمان‌بندی</div>
+                    <div class="flip-val">پذیرش ۱۵:۳۰<br />فیلم ۱۶:۰۰</div>
+                  </div>
+                  <div class="flip-face flip-back">
+                    <span class="flip-mark" aria-hidden="true">↺</span>
+                    <p class="flip-detail">درها ساعت ۱۵:۳۰ باز می‌شود؛ اکران فیلم از ۱۶:۰۰ تا ۱۷:۴۵ و پس از آن دورهمی یلدایی است.</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Card 2: پذیرایی -->
+              <div class="flip-card" tabindex="0" role="button" aria-pressed="false" aria-label="پذیرایی مراسم">
+                <div class="flip-inner">
+                  <div class="flip-face flip-front">
+                    <span class="flip-mark" aria-hidden="true">↻</span>
+                    <div class="flip-icon" aria-hidden="true">🍽</div>
+                    <div class="flip-title">پذیرایی</div>
+                    <div class="flip-val">بدون شام<br />پذیرایی سبک</div>
+                  </div>
+                  <div class="flip-face flip-back">
+                    <span class="flip-mark" aria-hidden="true">↺</span>
+                    <p class="flip-detail">در این برنامه شام سرو نمی‌شود؛ چای و تنقلات یلدایی تدارک دیده شده است.</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Card 3: ورودی -->
+              <div class="flip-card" tabindex="0" role="button" aria-pressed="false" aria-label="هزینه ورودی">
+                <div class="flip-inner">
+                  <div class="flip-face flip-front">
+                    <span class="flip-mark" aria-hidden="true">↻</span>
+                    <div class="flip-icon" aria-hidden="true">💶</div>
+                    <div class="flip-title">ورودی</div>
+                    <div class="flip-val">۵ یورو<br />هر نفر</div>
+                  </div>
+                  <div class="flip-face flip-back">
+                    <span class="flip-mark" aria-hidden="true">↺</span>
+                    <p class="flip-detail">
+                      هزینه ورودی ۵ یورو به ازای هر نفر (واریز آنلاین
+                      <span class="bookend-mn" style="font-size:0.95em;"><span class="bk-edge">M</span>obilePay<span class="bk-sep">/</span>IBA<span class="bk-edge">N</span></span>
+                      یا پرداخت در محل).
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div id="fullBanner" class="full-banner">
+              ظرفیت سالن تکمیل شد — از استقبال گرم شما سپاسگزاریم ✦
+            </div>
+
+            <p class="flip-cue">برای چرخش ۱۸۰ درجه و خواندن جزئیات هر کارت، آن را لمس یا کلیک کنید ↻</p>
+          </div>
+        </section>
+
+        <!-- ==================== STEP 2: مشخصات ==================== -->
+        <section id="panel-2" class="step-panel pose-next" aria-label="مشخصات و حضور">
+          <div class="panel-head">
+            <h2 class="panel-title">مشخصات و نحوه حضور</h2>
+            <span class="panel-note">بلیت دیجیتال به ایمیل شما ارسال می‌شود</span>
+          </div>
+
+          <div id="errStep2" class="inline-err" role="alert">
+            <span>⚠</span>
+            <span id="errStep2Text">لطفاً فیلدهای الزامی را تکمیل کنید.</span>
+          </div>
+
+          <div class="grid-2">
+            <div class="field">
+              <label for="fullName" class="field-label">نام و نام خانوادگی <span class="req">*</span></label>
+              <input id="fullName" type="text" class="g-input" autocomplete="name" placeholder="مثلاً: سارا محمدی" />
+            </div>
+
+            <div class="field">
+              <label for="email" class="field-label">ایمیل <span class="req">*</span></label>
+              <input id="email" type="email" class="g-input ltr" dir="ltr" autocomplete="email" placeholder="name@example.com" />
+            </div>
+          </div>
+
+          <div class="grid-2">
+            <div class="field">
+              <label for="phone" class="field-label">شماره تماس (اختیاری)</label>
+              <input id="phone" type="tel" class="g-input ltr" dir="ltr" autocomplete="tel" placeholder="+358 40 123 4567" />
+            </div>
+
+            <div class="field">
+              <span class="field-label">تعداد نفرات <span class="req">*</span></span>
+              <div class="guest-box">
+                <div class="stepper-pair">
+                  <button type="button" id="btnMinus" class="qty-btn" aria-label="کاهش تعداد نفرات">−</button>
+                  <span id="qtyNum" class="qty-val">۱</span>
+                  <button type="button" id="btnPlus" class="qty-btn" aria-label="افزایش تعداد نفرات">+</button>
+                </div>
+                <span id="liveFeePill" class="fee-pill">5 € × 1 = 5 €</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="field">
+            <span class="field-label">بخش حضور در مراسم <span class="req">*</span></span>
+            <div class="radio-grid-3" role="radiogroup" aria-label="بخش حضور">
+              <label class="r-card">
+                <input type="radio" name="attendance" value="کل برنامه (فیلم ۱۶ تا ۱۷:۴۵ + دورهمی)" checked />
+                <span class="r-face">
+                  <span>کل برنامه</span>
+                  <span class="r-sub">فیلم ۱۶ تا ۱۷:۴۵ + دورهمی</span>
+                </span>
+              </label>
+
+              <label class="r-card">
+                <input type="radio" name="attendance" value="فقط اکران فیلم (۱۶ تا ۱۷:۴۵)" />
+                <span class="r-face">
+                  <span>فقط اکران فیلم</span>
+                  <span class="r-sub">۱۶:۰۰ تا ۱۷:۴۵</span>
+                </span>
+              </label>
+
+              <label class="r-card">
+                <input type="radio" name="attendance" value="فقط دورهمی یلدایی (از ۱۷:۴۵ به بعد)" />
+                <span class="r-face">
+                  <span>فقط دورهمی یلدایی</span>
+                  <span class="r-sub">از ۱۷:۴۵ به بعد</span>
+                </span>
+              </label>
+            </div>
+          </div>
+
+          <div class="field" style="margin-bottom: 2px;">
+            <span class="field-label">رضایت عکاسی در مراسم (GDPR) <span class="req">*</span></span>
+            <div class="radio-grid-2" role="radiogroup" aria-label="رضایت عکاسی">
+              <label class="r-card">
+                <input type="radio" name="photoConsent" value="موافق با عکاسی و انتشار" />
+                <span class="r-face">موافق با عکاسی و انتشار</span>
+              </label>
+              <label class="r-card">
+                <input type="radio" name="photoConsent" value="عدم رضایت برای انتشار تصویر" />
+                <span class="r-face">عدم رضایت برای انتشار تصویر</span>
+              </label>
+            </div>
+          </div>
+        </section>
+
+        <!-- ==================== STEP 3: پرداخت و جزئیات ==================== -->
+        <section id="panel-3" class="step-panel pose-next" aria-label="پرداخت و جزئیات تکمیلی">
+          <div class="panel-head">
+            <h2 class="panel-title">پرداخت و جزئیات تکمیلی</h2>
+            <span class="panel-note">مبلغ کل: <strong id="step3Total" style="color:var(--gold-bright);">۵ یورو</strong> (بدون شام)</span>
+          </div>
+
+          <div id="errStep3" class="inline-err" role="alert">
+            <span>⚠</span>
+            <span id="errStep3Text">خطایی در ثبت اطلاعات رخ داد.</span>
+          </div>
+
+          <!-- Payment Method Radios (MOTIF 2: Bookend Typography "MobilePay / IBAN") -->
+          <div class="field">
+            <span class="field-label">روش پرداخت ورودی <span class="req">*</span></span>
+            <div class="radio-grid-2" role="radiogroup" aria-label="روش پرداخت">
+              <label class="r-card">
+                <input type="radio" name="paymentMethod" value="واریز آنلاین (MobilePay / IBAN)" checked />
+                <span class="r-face">
+                  <span>واریز آنلاین</span>
+                  <span class="bookend-mn" style="font-size:0.74rem;margin-top:2px;">(<span class="bk-edge">M</span>obilePay<span class="bk-sep">/</span>IBA<span class="bk-edge">N</span>)</span>
+                </span>
+              </label>
+              <label class="r-card">
+                <input type="radio" name="paymentMethod" value="پرداخت در محل مراسم" />
+                <span class="r-face">
+                  <span>پرداخت در محل مراسم</span>
+                  <span class="r-sub">نقدی یا MobilePay</span>
+                </span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Collapsible Gold-Bordered Online Payment Box -->
+          <div id="payDrawer" class="pay-drawer is-open">
+            <div class="pay-drawer-inner">
+              <div class="pay-panel">
+                <!-- Side-by-Side Bookend Header: M...N -->
+                <div class="pay-panel-head">
+                  <span class="pay-panel-tag">اطلاعات واریز آنلاین</span>
+                  <span class="pay-bookend-pill">
+                    <span class="bookend-mn"><span class="bk-edge">M</span>obilePay<span class="bk-sep">/</span>IBA<span class="bk-edge">N</span></span>
+                  </span>
+                </div>
+
+                <div class="copy-grid">
+                  <div class="copy-item">
+                    <div class="copy-meta">
+                      <span class="copy-lbl">MobilePay</span>
+                      <span class="copy-code" id="uiMobilePay">040 123 4567</span>
+                    </div>
+                    <button type="button" class="copy-btn" data-copy="mobilePay">کپی</button>
+                  </div>
+                  <div class="copy-item">
+                    <div class="copy-meta">
+                      <span class="copy-lbl">IBAN</span>
+                      <span class="copy-code" id="uiIban">FI00 0000 0000 0000 00</span>
+                    </div>
+                    <button type="button" class="copy-btn" data-copy="iban">کپی</button>
+                  </div>
+                </div>
+
+                <p class="pay-hint">پیام واریز (Reference): <strong dir="ltr">Yalda + نام شما</strong></p>
+                <input id="paymentRef" type="text" class="g-input" placeholder="نام واریزکننده یا کد پیگیری پرداخت (اختیاری)" />
+              </div>
+            </div>
+          </div>
+
+          <!-- Volunteering Multi-Select Pills -->
+          <div class="field">
+            <span class="field-label">همراهی داوطلبانه (اختیاری)</span>
+            <div class="v-chips">
+              <label class="v-pill">
+                <input type="checkbox" name="volunteering" value="آوردن خوراکی/تنقلات یلدایی" />
+                <span class="v-pill-face">🍉 آوردن خوراکی/تنقلات یلدایی</span>
+              </label>
+              <label class="v-pill">
+                <input type="checkbox" name="volunteering" value="کمک در چیدمان سالن" />
+                <span class="v-pill-face">✨ کمک در چیدمان سالن</span>
+              </label>
+              <label class="v-pill">
+                <input type="checkbox" name="volunteering" value="کمک در جمع‌آوری سالن" />
+                <span class="v-pill-face">🤝 کمک در جمع‌آوری سالن</span>
+              </label>
+              <label class="v-pill">
+                <input type="checkbox" name="volunteering" value="مشارکت هنری" />
+                <span class="v-pill-face">🎶 مشارکت هنری</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Allergies & Notes -->
+          <div class="grid-2" style="margin-bottom: 2px;">
+            <div class="field">
+              <label for="allergies" class="field-label">آلرژی غذایی (اختیاری)</label>
+              <input id="allergies" type="text" class="g-input" placeholder="مثلاً آجیل، لاکتوز، گلوتن" />
+            </div>
+            <div class="field">
+              <label for="notes" class="field-label">یادداشت (اختیاری)</label>
+              <textarea id="notes" rows="2" class="g-textarea" placeholder="همراه کودک یا نکته خاص..."></textarea>
+            </div>
+          </div>
+        </section>
+
+        <!-- ==================== STEP 4: بلیت دیجیتال هولوگرافیک سه‌بعدی ==================== -->
+        <section id="panel-4" class="step-panel pose-next" aria-label="بلیت دیجیتال">
+          <div class="ticket-wrap">
+            <div
+              id="holoTicket"
+              class="ticket-scene"
+              tabindex="0"
+              role="button"
+              aria-pressed="false"
+              aria-label="بلیت دیجیتال سه‌بعدی - برای چرخش لمس کنید"
+            >
+              <div class="ticket-inner">
+                <!-- Ticket Front -->
+                <div class="ticket-face ticket-front">
+                  <div class="ticket-body">
+                    <div class="ticket-header">
+                      <div>
+                        <div style="font-size:clamp(0.84rem,2.2vw,1rem);font-weight:800;color:var(--gold-bright);" id="tkTitle">جشن شب یلدا ۱۴۰۵ | هلسینکی</div>
+                        <div style="font-size:0.71rem;color:var(--text-soft);" id="tkAssoc">انجمن فرهنگی ایرانیان هلسینکی</div>
+                      </div>
+                      <div class="ticket-code" id="tkCode">YLD-00000</div>
+                    </div>
+
+                    <!-- MOTIF 3 (Ticket Front): Minimalist Gold Morse-Code Micro-Divider ("-- -.") -->
+                    <svg class="morse-ticket-divider" viewBox="0 0 260 12" preserveAspectRatio="none" aria-hidden="true">
+                      <use href="#morseOrnamentFull" />
+                    </svg>
+
+                    <div class="ticket-grid">
+                      <div class="t-box">
+                        <span class="t-k">نام مهمان</span>
+                        <span class="t-v" id="tkGuest">—</span>
+                      </div>
+                      <div class="t-box">
+                        <span class="t-k">تعداد نفرات و مبلغ کل</span>
+                        <span class="t-v" style="color:var(--gold-bright);" id="tkFee">—</span>
+                      </div>
+                      <div class="t-box full">
+                        <span class="t-k">بخش حضور</span>
+                        <span class="t-v" id="tkAttendance">—</span>
+                      </div>
+                    </div>
+
+                    <div id="tkEmailPill" class="email-pill">
+                      ✉ ایمیل تاییدیه ارسال شد ✓
+                    </div>
+
+                    <!-- MOTIF 6 (Ticket Front Bottom): Guilloché Security Wave -->
+                    <svg class="ticket-guilloche" viewBox="0 0 600 22" preserveAspectRatio="none" aria-hidden="true" style="margin:6px 0 0;">
+                      <use href="#guillocheWaveMN" />
+                    </svg>
+                  </div>
+                  <div class="ticket-cue">برای دیدن جزئیات پشت بلیت ضربه بزنید ↻</div>
+                </div>
+
+                <!-- Ticket Back -->
+                <div class="ticket-face ticket-back">
+                  <div class="ticket-body">
+                    <div class="ticket-header">
+                      <div style="font-size:0.88rem;font-weight:800;color:var(--gold-bright);">اطلاعات ورود و یادآوری مراسم</div>
+                      <div style="font-size:0.7rem;color:var(--text-soft);" id="tkBackDate">—</div>
+                    </div>
+
+                    <!-- MOTIF 6 (Ticket Back): Guilloché Security Wave -->
+                    <svg class="ticket-guilloche" viewBox="0 0 600 22" preserveAspectRatio="none" aria-hidden="true">
+                      <use href="#guillocheWaveMN" />
+                    </svg>
+
+                    <ul class="ticket-list">
+                      <li>📍 <strong>مکان:</strong> <span id="tkBackVenue">—</span></li>
+                      <li>🕒 <strong>زمان‌بندی:</strong> پذیرش ۱۵:۳۰ | فیلم ۱۶:۰۰ تا ۱۷:۴۵ | بدون شام</li>
+                      <li>
+                        💳 <span class="bookend-mn" style="font-size:0.75rem;"><span class="bk-edge">M</span>obilePay<span class="bk-sep">/</span>IBA<span class="bk-edge">N</span></span>:
+                        <span id="tkBackPay" dir="ltr" style="color:var(--gold-bright);">—</span>
+                      </li>
+                      <li>✉ <strong>تماس:</strong> <span id="tkBackContact" dir="ltr">—</span></li>
+                    </ul>
+
+                    <div style="text-align:center;">
+                      <button type="button" id="btnResetBack" class="btn-ghost" style="min-height:34px;padding:5px 14px;font-size:0.75rem;">
+                        + ثبت‌نام جدید
+                      </button>
+                    </div>
+                  </div>
+                  <div class="ticket-cue">برای بازگشت به روی بلیت ضربه بزنید ↺</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="ticket-btns">
+              <button type="button" id="btnFlipTicket" class="btn-primary" style="min-height:38px;padding:7px 18px;font-size:0.79rem;">
+                🔄 برای دیدن جزئیات پشت بلیت کلیک کنید
+              </button>
+              <button type="button" id="btnResetTicket" class="btn-ghost" style="min-height:38px;padding:7px 14px;font-size:0.77rem;">
+                ثبت‌نام جدید
+              </button>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <!-- PINNED FOOTER NAVIGATION BAR (HIDDEN ON STEP 4) -->
+      <footer id="cardFooter" class="card-footer is-centered">
+        <button type="button" id="btnPrev" class="btn-ghost hidden">→ مرحله قبل</button>
+        <button type="button" id="btnNext" class="btn-primary wide">
+          <span class="btn-spin" aria-hidden="true"></span>
+          <span id="btnNextText">شروع ثبت‌نام ←</span>
+        </button>
+      </footer>
+    </section>
+  </main>
+
+  <script>
+    (function () {
+      'use strict';
+
+      /* =======================================================================
+         1. EDITABLE EVENT CONFIGURATION (SYNCED WITH Code.gs)
+         ======================================================================= */
+      const EVENT_CONFIG = {
+        associationName: 'انجمن فرهنگی ایرانیان هلسینکی',
+        title: 'جشن شب یلدا ۱۴۰۵ | هلسینکی',
+        date: 'شنبه ۲۸ آذر ۱۴۰۵ (۱۹ دسامبر ۲۰۲۶)',
+        venue: 'هلسینکی — [نام سالن و آدرس دقیق]',
+        filmDesc: 'اکران فیلم ویژه (۱۶:۰۰ تا ۱۷:۴۵)',
+        mobilePay: '040 123 4567',
+        iban: 'FI00 0000 0000 0000 00',
+        contact: 'info@example.fi',
+        pricePerPerson: 5
+      };
+
+      const PRICE_PER_PERSON = EVENT_CONFIG.pricePerPerson;
+      const DEMO_CAPACITY = 80;
+      const DEMO_BOOKED = 27;
+
+      const hasAppsScript = typeof google !== 'undefined' && google.script && google.script.run;
+
+      const state = {
+        step: 1,
+        animating: false,
+        capacity: DEMO_CAPACITY,
+        booked: DEMO_BOOKED,
+        remaining: DEMO_CAPACITY - DEMO_BOOKED,
+        isFull: false,
+        guests: 1,
+        snowOn: true,
+        submitting: false
+      };
+
+      function toFa(num) {
+        const digits = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
+        return String(num).replace(/\d/g, (d) => digits[Number(d)]);
+      }
+
+      /* Populate static copy from EVENT_CONFIG */
+      function hydrateConfig() {
+        document.title = EVENT_CONFIG.title;
+        document.getElementById('uiTitle').textContent = EVENT_CONFIG.title;
+        document.getElementById('uiAssocHeader').textContent = EVENT_CONFIG.associationName;
+        document.getElementById('uiAssocHero').textContent = EVENT_CONFIG.associationName;
+        document.getElementById('uiDate').textContent = EVENT_CONFIG.date;
+        document.getElementById('uiVenue').textContent = EVENT_CONFIG.venue;
+        document.getElementById('uiFilm').textContent = EVENT_CONFIG.filmDesc;
+        document.getElementById('uiMobilePay').textContent = EVENT_CONFIG.mobilePay;
+        document.getElementById('uiIban').textContent = EVENT_CONFIG.iban;
+
+        document.getElementById('tkTitle').textContent = EVENT_CONFIG.title;
+        document.getElementById('tkAssoc').textContent = EVENT_CONFIG.associationName;
+        document.getElementById('tkBackDate').textContent = EVENT_CONFIG.date;
+        document.getElementById('tkBackVenue').textContent = EVENT_CONFIG.venue;
+        document.getElementById('tkBackPay').textContent = `${EVENT_CONFIG.mobilePay} | ${EVENT_CONFIG.iban}`;
+        document.getElementById('tkBackContact').textContent = EVENT_CONFIG.contact;
+      }
+
+      /* =======================================================================
+         2. LIVE CAPACITY STATUS & GUEST FEE CONTROLS
+         ======================================================================= */
+      function onStatus(res) {
+        if (!res) return;
+
+        const cap = Math.max(1, Number(res.capacity || res.maxCapacity) || DEMO_CAPACITY);
+        const remRaw = typeof res.remaining === 'number'
+          ? res.remaining
+          : (typeof res.seatsLeft === 'number' ? res.seatsLeft : null);
+        const regRaw = typeof res.registered === 'number'
+          ? res.registered
+          : (typeof res.booked === 'number' ? res.booked : (remRaw !== null ? cap - remRaw : 0));
+
+        state.capacity = cap;
+        state.booked = Math.max(0, Math.min(cap, regRaw));
+        state.remaining = remRaw !== null ? Math.max(0, remRaw) : Math.max(0, cap - state.booked);
+        state.isFull = Boolean(res.isFull) || state.remaining <= 0;
+
+        const pct = Math.min(100, Math.round((state.booked / state.capacity) * 100));
+        const pill = document.getElementById('capPill');
+        const label = document.getElementById('capLabel');
+        const bar = document.getElementById('capBar');
+        const fullBanner = document.getElementById('fullBanner');
+
+        pill.classList.remove('is-low', 'is-full');
+        bar.style.width = pct + '%';
+
+        if (state.isFull) {
+          pill.classList.add('is-full');
+          label.textContent = 'ظرفیت تکمیل شد';
+          bar.style.background = 'linear-gradient(90deg, #a61c31, #dc2645)';
+          fullBanner.classList.add('is-visible');
+        } else {
+          fullBanner.classList.remove('is-visible');
+          label.textContent = `${toFa(state.remaining)} صندلی باقی‌مانده از ${toFa(state.capacity)}`;
+          if (state.remaining <= 15) {
+            pill.classList.add('is-low');
+            bar.style.background = 'linear-gradient(90deg, #f59e0b, #dc2645)';
+          } else {
+            bar.style.background = 'linear-gradient(90deg, #34d399, #dfb16b)';
+          }
+        }
+
+        syncGuests(false);
+        syncFooter();
+      }
+
+      function onStatusErr() {
+        onStatus({
+          capacity: DEMO_CAPACITY,
+          registered: 0,
+          remaining: DEMO_CAPACITY,
+          isFull: false
+        });
+      }
+
+      function syncGuests(animatePop) {
+        const maxAllowed = Math.max(1, Math.min(10, state.remaining || 1));
+        state.guests = Math.max(1, Math.min(maxAllowed, state.guests));
+        const total = state.guests * PRICE_PER_PERSON;
+
+        document.getElementById('qtyNum').textContent = toFa(state.guests);
+        const pill = document.getElementById('liveFeePill');
+        pill.textContent = `${PRICE_PER_PERSON} € × ${state.guests} = ${total} €`;
+        if (animatePop) {
+          pill.classList.remove('pop');
+          void pill.offsetWidth;
+          pill.classList.add('pop');
+          setTimeout(() => pill.classList.remove('pop'), 200);
+        }
+
+        document.getElementById('step3Total').textContent = `${toFa(total)} یورو (${toFa(state.guests)} نفر)`;
+        document.getElementById('btnMinus').disabled = state.guests <= 1;
+        document.getElementById('btnPlus').disabled = state.guests >= maxAllowed;
+      }
+
+      /* =======================================================================
+         3. DIRECTION-AWARE 3D PERSPECTIVE STEP TRANSITIONS (RTL)
+         ======================================================================= */
+      function syncStepper() {
+        document.querySelectorAll('.step-btn').forEach((btn) => {
+          const idx = Number(btn.getAttribute('data-step'));
+          const numEl = btn.querySelector('.step-num');
+          btn.classList.remove('is-active', 'is-done');
+
+          if (idx === state.step) {
+            btn.classList.add('is-active');
+            numEl.textContent = toFa(idx);
+          } else if (idx < state.step) {
+            btn.classList.add('is-done');
+            numEl.textContent = '✓';
+          } else {
+            numEl.textContent = toFa(idx);
+          }
+        });
+      }
+
+      function syncFooter() {
+        const footer = document.getElementById('cardFooter');
+        const btnPrev = document.getElementById('btnPrev');
+        const btnNext = document.getElementById('btnNext');
+        const txt = document.getElementById('btnNextText');
+
+        if (state.step === 4) {
+          footer.classList.add('is-hidden');
+          return;
+        }
+
+        footer.classList.remove('is-hidden');
+        if (state.step === 1) {
+          footer.classList.add('is-centered');
+          btnPrev.classList.add('hidden');
+          btnNext.classList.add('wide');
+          btnNext.disabled = state.isFull;
+          txt.textContent = state.isFull ? 'ظرفیت تکمیل شد' : 'شروع ثبت‌نام ←';
+        } else if (state.step === 2) {
+          footer.classList.remove('is-centered');
+          btnPrev.classList.remove('hidden');
+          btnNext.classList.remove('wide');
+          btnNext.disabled = state.isFull;
+          txt.textContent = 'مرحله بعد: پرداخت ←';
+        } else if (state.step === 3) {
+          footer.classList.remove('is-centered');
+          btnPrev.classList.remove('hidden');
+          btnNext.classList.remove('wide');
+          btnNext.disabled = state.isFull || state.submitting;
+          txt.textContent = state.submitting ? 'در حال ثبت اطلاعات...' : 'تکمیل ثبت‌نام و دریافت بلیت ✦';
+        }
+      }
+
+      function goToStep(target) {
+        if (state.animating || target === state.step || target < 1 || target > 4) return;
+
+        const outPanel = document.getElementById('panel-' + state.step);
+        const inPanel = document.getElementById('panel-' + target);
+        if (!outPanel || !inPanel) return;
+
+        const isForward = target > state.step;
+        state.animating = true;
+
+        inPanel.classList.add('no-transition');
+        inPanel.classList.remove('is-active', 'pose-next', 'pose-prev');
+        inPanel.classList.add(isForward ? 'pose-next' : 'pose-prev');
+        inPanel.scrollTop = 0;
+
+        void inPanel.offsetWidth;
+        inPanel.classList.remove('no-transition');
+
+        requestAnimationFrame(() => {
+          outPanel.classList.remove('is-active', 'pose-next', 'pose-prev');
+          outPanel.classList.add(isForward ? 'pose-prev' : 'pose-next');
+
+          inPanel.classList.remove('pose-next', 'pose-prev');
+          inPanel.classList.add('is-active');
+
+          state.step = target;
+          syncStepper();
+          syncFooter();
+
+          setTimeout(() => { state.animating = false; }, 580);
+        });
+      }
+
+      /* =======================================================================
+         4. VALIDATION, CLIPBOARD & DUAL-MODE APPS SCRIPT SUBMISSION
+         ======================================================================= */
+      function showErr(boxId, textId, msg, focusEl) {
+        const box = document.getElementById(boxId);
+        document.getElementById(textId).textContent = msg;
+        box.classList.add('is-visible');
+        box.classList.remove('shake-it');
+        void box.offsetWidth;
+        box.classList.add('shake-it');
+        if (focusEl) {
+          focusEl.classList.add('is-invalid');
+          focusEl.focus();
+        }
+      }
+
+      function clearErr(boxId) {
+        document.getElementById(boxId).classList.remove('is-visible');
+      }
+
+      function validateStep2() {
+        clearErr('errStep2');
+        const nameEl = document.getElementById('fullName');
+        const emailEl = document.getElementById('email');
+        nameEl.classList.remove('is-invalid');
+        emailEl.classList.remove('is-invalid');
+
+        const nameVal = nameEl.value.trim();
+        const emailVal = emailEl.value.trim();
+        const emailRx = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        const consentEl = document.querySelector('input[name="photoConsent"]:checked');
+
+        if (!nameVal) {
+          showErr('errStep2', 'errStep2Text', 'لطفاً نام و نام خانوادگی خود را وارد کنید.', nameEl);
+          return false;
+        }
+        if (!emailVal || !emailRx.test(emailVal)) {
+          showErr('errStep2', 'errStep2Text', 'لطفاً یک نشانی ایمیل معتبر وارد کنید.', emailEl);
+          return false;
+        }
+        if (!consentEl) {
+          showErr('errStep2', 'errStep2Text', 'لطفاً وضعیت رضایت عکاسی (GDPR) را مشخص کنید.');
+          return false;
+        }
+        return true;
+      }
+
+      function buildPayload() {
+        clearErr('errStep3');
+        const consentEl = document.querySelector('input[name="photoConsent"]:checked');
+        if (!consentEl) {
+          showErr('errStep3', 'errStep3Text', 'لطفاً در مرحله قبل رضایت عکاسی (GDPR) را انتخاب کنید.');
+          return null;
+        }
+
+        const attendanceEl = document.querySelector('input[name="attendance"]:checked');
+        const paymentEl = document.querySelector('input[name="paymentMethod"]:checked');
+        const volunteering = Array.from(document.querySelectorAll('input[name="volunteering"]:checked'))
+          .map((el) => el.value);
+
+        return {
+          fullName: document.getElementById('fullName').value.trim(),
+          email: document.getElementById('email').value.trim(),
+          phone: document.getElementById('phone').value.trim(),
+          guests: state.guests,
+          attendance: attendanceEl ? attendanceEl.value : 'کل برنامه (فیلم ۱۶ تا ۱۷:۴۵ + دورهمی)',
+          paymentMethod: paymentEl ? paymentEl.value : 'واریز آنلاین (MobilePay / IBAN)',
+          paymentRef: document.getElementById('paymentRef').value.trim(),
+          volunteering: volunteering,
+          allergies: document.getElementById('allergies').value.trim(),
+          photoConsent: consentEl.value,
+          notes: document.getElementById('notes').value.trim()
+        };
+      }
+
+      /* iFrame-safe Clipboard Copy using document.execCommand('copy') */
+      function copyToClipboard(text, btn) {
+        try {
+          const ta = document.createElement('textarea');
+          ta.value = text;
+          ta.setAttribute('readonly', '');
+          ta.style.position = 'fixed';
+          ta.style.top = '-9999px';
+          document.body.appendChild(ta);
+          ta.select();
+          document.execCommand('copy');
+          document.body.removeChild(ta);
+
+          const old = btn.textContent;
+          btn.textContent = 'کپی شد ✓';
+          setTimeout(() => { btn.textContent = old; }, 1400);
+        } catch (err) {
+          console.error('Copy failed:', err);
+        }
+      }
+
+      function setSubmitting(flag) {
+        state.submitting = flag;
+        document.getElementById('btnNext').classList.toggle('is-loading', flag);
+        syncFooter();
+      }
+
+      function onSubmitResult(res, payload, isDemo) {
+        setSubmitting(false);
+
+        if (!res || res.success === false) {
+          showErr('errStep3', 'errStep3Text', (res && res.error) || 'خطایی در ثبت اطلاعات رخ داد.');
+          if (res && (typeof res.remaining === 'number' || typeof res.seatsLeft === 'number')) {
+            onStatus(res);
+          }
+          return;
+        }
+
+        const guests = Number(res.guests) || payload.guests || 1;
+        const totalFee = typeof res.totalFee === 'number' ? res.totalFee : guests * PRICE_PER_PERSON;
+        const code = res.trackingCode || ('YLD-' + Math.floor(10000 + Math.random() * 90000));
+
+        document.getElementById('tkCode').textContent = code;
+        document.getElementById('tkGuest').textContent = res.fullName || payload.fullName;
+        document.getElementById('tkFee').textContent = `${toFa(guests)} نفر · ${totalFee} €`;
+        document.getElementById('tkAttendance').textContent = payload.attendance;
+
+        const emailPill = document.getElementById('tkEmailPill');
+        emailPill.classList.remove('is-demo');
+        if (isDemo) {
+          emailPill.classList.add('is-demo');
+          emailPill.textContent = '✦ پیش‌نمایش فعال است — در نسخه Apps Script ایمیل تاییدیه ارسال می‌شود ✓';
+        } else if (res.emailSent === false) {
+          emailPill.classList.add('is-demo');
+          emailPill.textContent = '⚠ ثبت‌نام ذخیره شد (ایمیل ارسال نشد — لطفاً اسکرین‌شات بگیرید)';
+        } else {
+          emailPill.textContent = '✉ ایمیل تاییدیه ارسال شد ✓';
+        }
+
+        const tk = document.getElementById('holoTicket');
+        tk.classList.remove('is-flipped');
+        tk.setAttribute('aria-pressed', 'false');
+
+        onStatus({
+          capacity: res.capacity || state.capacity,
+          registered: typeof res.registered === 'number' ? res.registered : (state.booked + guests),
+          remaining: typeof res.remaining === 'number' ? res.remaining : Math.max(0, state.remaining - guests),
+          isFull: typeof res.isFull === 'boolean' ? res.isFull : (state.remaining - guests <= 0)
+        });
+
+        goToStep(4);
+        setTimeout(() => {
+          if (typeof window.__yaldaBurst === 'function') window.__yaldaBurst();
+        }, 230);
+      }
+
+      function handleSubmit() {
+        const payload = buildPayload();
+        if (!payload) return;
+        if (state.isFull) {
+          showErr('errStep3', 'errStep3Text', 'متأسفانه ظرفیت تکمیل شده است.');
+          return;
+        }
+
+        setSubmitting(true);
+
+        try {
+          if (hasAppsScript) {
+            google.script.run
+              .withSuccessHandler((res) => onSubmitResult(res, payload, false))
+              .withFailureHandler((err) => {
+                setSubmitting(false);
+                showErr('errStep3', 'errStep3Text', 'خطا در ارتباط با سرور: ' + ((err && err.message) || err));
+              })
+              .submitRegistration(payload);
+          } else {
+            // Preview Demo Mode (700ms simulated submission)
+            setTimeout(() => {
+              if (payload.guests > state.remaining) {
+                onSubmitResult({
+                  success: false,
+                  error: `تنها ${toFa(state.remaining)} صندلی باقی مانده است.`,
+                  remaining: state.remaining,
+                  capacity: state.capacity,
+                  isFull: state.remaining <= 0
+                }, payload, true);
+                return;
+              }
+              const demoCode = 'YLD-' + Math.floor(10000 + Math.random() * 90000);
+              onSubmitResult({
+                success: true,
+                trackingCode: demoCode,
+                totalFee: payload.guests * PRICE_PER_PERSON,
+                guests: payload.guests,
+                fullName: payload.fullName,
+                emailSent: true,
+                capacity: state.capacity,
+                registered: state.booked + payload.guests,
+                remaining: Math.max(0, state.remaining - payload.guests),
+                isFull: (state.remaining - payload.guests) <= 0
+              }, payload, true);
+            }, 700);
+          }
+        } catch (err) {
+          setSubmitting(false);
+          showErr('errStep3', 'errStep3Text', 'خطای غیرمنتظره رخ داد. لطفاً دوباره تلاش کنید.');
+        }
+      }
+
+      function resetForm() {
+        document.getElementById('fullName').value = '';
+        document.getElementById('email').value = '';
+        document.getElementById('phone').value = '';
+        document.getElementById('paymentRef').value = '';
+        document.getElementById('allergies').value = '';
+        document.getElementById('notes').value = '';
+        document.querySelectorAll('input[name="volunteering"]').forEach((c) => { c.checked = false; });
+        document.querySelectorAll('input[name="photoConsent"]').forEach((r) => { r.checked = false; });
+        document.querySelector('input[name="attendance"]').checked = true;
+        document.querySelector('input[name="paymentMethod"]').checked = true;
+        document.getElementById('payDrawer').classList.add('is-open');
+
+        state.guests = 1;
+        syncGuests(false);
+        clearErr('errStep2');
+        clearErr('errStep3');
+        goToStep(1);
+      }
+
+      /* =======================================================================
+         5. SUBTLE 3D CARD MOUSE-TILT (FINE POINTER / HOVER DEVICES ONLY)
+         ======================================================================= */
+      function initDesktopTilt() {
+        const fineHover = window.matchMedia && window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+        const reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (!fineHover || reduced) return;
+
+        const card = document.getElementById('glassCard');
+        document.addEventListener('mousemove', (e) => {
+          const rect = card.getBoundingClientRect();
+          const cx = rect.left + rect.width / 2;
+          const cy = rect.top + rect.height / 2;
+          const dx = Math.max(-1, Math.min(1, (e.clientX - cx) / (window.innerWidth * 0.55)));
+          const dy = Math.max(-1, Math.min(1, (e.clientY - cy) / (window.innerHeight * 0.55)));
+          card.style.setProperty('--tilt-y', (dx * 3.1).toFixed(2) + 'deg');
+          card.style.setProperty('--tilt-x', (-dy * 2.5).toFixed(2) + 'deg');
+        });
+
+        document.addEventListener('mouseleave', () => {
+          card.style.setProperty('--tilt-x', '0deg');
+          card.style.setProperty('--tilt-y', '0deg');
+        });
+      }
+
+      /* =======================================================================
+         6. INTERACTIVE SNOWFALL + STEP 4 RUBY & GOLD SPARKLE BURST CANVAS
+         ======================================================================= */
+      function initCanvas() {
+        const canvas = document.getElementById('fxCanvas');
+        const ctx = canvas && canvas.getContext('2d');
+        if (!ctx) return;
+
+        const snowBtn = document.getElementById('snowBtn');
+        const reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (reduced) {
+          state.snowOn = false;
+          snowBtn.setAttribute('aria-pressed', 'false');
+        }
+
+        let w = 0;
+        let h = 0;
+        let flakes = [];
+        let sparks = [];
+        let rafId = null;
+
+        function resize() {
+          const dpr = Math.min(window.devicePixelRatio || 1, 2);
+          w = window.innerWidth;
+          h = window.innerHeight;
+          canvas.width = Math.floor(w * dpr);
+          canvas.height = Math.floor(h * dpr);
+          ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+          const count = Math.min(76, Math.max(30, Math.floor(w / 20)));
+          flakes = Array.from({ length: count }, () => {
+            const depth = Math.random();
+            return {
+              x: Math.random() * w,
+              y: Math.random() * h,
+              r: 0.9 + depth * 2.1,
+              vy: 0.28 + depth * 0.65,
+              vx: (Math.random() - 0.5) * 0.24,
+              phase: Math.random() * Math.PI * 2,
+              sway: 0.14 + depth * 0.34,
+              alpha: 0.18 + depth * 0.56,
+              gold: Math.random() > 0.87
+            };
+          });
+        }
+
+        window.__yaldaBurst = function () {
+          const cx = w * 0.5;
+          const cy = h * 0.46;
+          const colors = ['#dc2645', '#a61c31', '#dfb16b', '#fae3bb', '#ff8aa3', '#ffffff'];
+          for (let i = 0; i < 78; i++) {
+            const angle = (Math.PI * 2 * i) / 78 + (Math.random() - 0.5) * 0.32;
+            const speed = 2.4 + Math.random() * 5.8;
+            sparks.push({
+              x: cx,
+              y: cy,
+              vx: Math.cos(angle) * speed,
+              vy: Math.sin(angle) * speed - 1.4,
+              r: 1.8 + Math.random() * 3.3,
+              life: 1,
+              decay: 0.011 + Math.random() * 0.012,
+              color: colors[Math.floor(Math.random() * colors.length)]
+            });
+          }
+          if (!rafId) frame();
+        };
+
+        function frame() {
+          ctx.clearRect(0, 0, w, h);
+
+          if (state.snowOn) {
+            for (let i = 0; i < flakes.length; i++) {
+              const f = flakes[i];
+              f.phase += 0.013;
+              f.y += f.vy;
+              f.x += f.vx + Math.sin(f.phase) * f.sway;
+
+              if (f.y > h + 8) { f.y = -8; f.x = Math.random() * w; }
+              if (f.x > w + 8) f.x = -8;
+              if (f.x < -8) f.x = w + 8;
+
+              const g = ctx.createRadialGradient(f.x, f.y, 0, f.x, f.y, f.r * 2);
+              if (f.gold) {
+                g.addColorStop(0, `rgba(250, 227, 187, ${f.alpha})`);
+                g.addColorStop(1, 'rgba(250, 227, 187, 0)');
+              } else {
+                g.addColorStop(0, `rgba(226, 244, 255, ${f.alpha})`);
+                g.addColorStop(1, 'rgba(226, 244, 255, 0)');
+              }
+              ctx.beginPath();
+              ctx.arc(f.x, f.y, f.r * 2, 0, Math.PI * 2);
+              ctx.fillStyle = g;
+              ctx.fill();
+            }
+          }
+
+          for (let i = sparks.length - 1; i >= 0; i--) {
+            const p = sparks[i];
+            p.x += p.vx;
+            p.y += p.vy;
+            p.vy += 0.085;
+            p.vx *= 0.985;
+            p.life -= p.decay;
+
+            if (p.life <= 0) {
+              sparks.splice(i, 1);
+              continue;
+            }
+            ctx.save();
+            ctx.globalAlpha = Math.max(0, p.life);
+            ctx.fillStyle = p.color;
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.restore();
+          }
+
+          if (state.snowOn || sparks.length > 0) {
+            rafId = requestAnimationFrame(frame);
+          } else {
+            rafId = null;
+          }
+        }
+
+        snowBtn.addEventListener('click', () => {
+          state.snowOn = !state.snowOn;
+          snowBtn.setAttribute('aria-pressed', String(state.snowOn));
+          if (state.snowOn && !rafId) frame();
+        });
+
+        resize();
+        window.addEventListener('resize', resize);
+        if (state.snowOn) frame();
+      }
+
+      /* =======================================================================
+         7. BOOTSTRAP & EVENT LISTENERS
+         ======================================================================= */
+      window.addEventListener('DOMContentLoaded', () => {
+        hydrateConfig();
+        initDesktopTilt();
+        initCanvas();
+
+        if (hasAppsScript) {
+          google.script.run
+            .withSuccessHandler(onStatus)
+            .withFailureHandler(onStatusErr)
+            .getEventStatus();
+        } else {
+          onStatus({
+            capacity: DEMO_CAPACITY,
+            registered: DEMO_BOOKED,
+            remaining: DEMO_CAPACITY - DEMO_BOOKED,
+            isFull: DEMO_BOOKED >= DEMO_CAPACITY
+          });
+        }
+
+        // Step 1 180° 3D Flip Cards
+        document.querySelectorAll('.flip-card').forEach((card) => {
+          const toggle = () => {
+            const flipped = card.classList.toggle('is-flipped');
+            card.setAttribute('aria-pressed', String(flipped));
+          };
+          card.addEventListener('click', toggle);
+          card.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              toggle();
+            }
+          });
+        });
+
+        // Header Stepper Navigation
+        document.querySelectorAll('.step-btn').forEach((btn) => {
+          btn.addEventListener('click', () => {
+            const target = Number(btn.getAttribute('data-step'));
+            if (state.step === 4) return;
+            if (target < state.step) goToStep(target);
+          });
+        });
+
+        // Footer Back / Next / Submit
+        document.getElementById('btnPrev').addEventListener('click', () => {
+          if (state.step === 2) { clearErr('errStep2'); goToStep(1); }
+          else if (state.step === 3) { clearErr('errStep3'); goToStep(2); }
+        });
+
+        document.getElementById('btnNext').addEventListener('click', () => {
+          if (state.isFull) return;
+          if (state.step === 1) goToStep(2);
+          else if (state.step === 2) { if (validateStep2()) goToStep(3); }
+          else if (state.step === 3) handleSubmit();
+        });
+
+        // Clear validation feedback on input
+        ['fullName', 'email'].forEach((id) => {
+          document.getElementById(id).addEventListener('input', (e) => {
+            e.target.classList.remove('is-invalid');
+            clearErr('errStep2');
+          });
+        });
+
+        document.querySelectorAll('input[name="photoConsent"]').forEach((radio) => {
+          radio.addEventListener('change', () => clearErr('errStep2'));
+        });
+
+        // Guest Stepper
+        document.getElementById('btnMinus').addEventListener('click', () => {
+          state.guests -= 1;
+          syncGuests(true);
+        });
+        document.getElementById('btnPlus').addEventListener('click', () => {
+          state.guests += 1;
+          syncGuests(true);
+        });
+
+        // Collapsible Online Payment Drawer
+        const payDrawer = document.getElementById('payDrawer');
+        document.querySelectorAll('input[name="paymentMethod"]').forEach((radio) => {
+          radio.addEventListener('change', (e) => {
+            payDrawer.classList.toggle('is-open', e.target.value.includes('آنلاین'));
+          });
+        });
+
+        // Copy MobilePay & IBAN buttons
+        document.querySelectorAll('.copy-btn').forEach((btn) => {
+          btn.addEventListener('click', () => {
+            const key = btn.getAttribute('data-copy');
+            copyToClipboard(EVENT_CONFIG[key] || '', btn);
+          });
+        });
+
+        // Step 4 Holographic Digital Ticket Flip
+        const tkEl = document.getElementById('holoTicket');
+        const toggleTicket = () => {
+          const flipped = tkEl.classList.toggle('is-flipped');
+          tkEl.setAttribute('aria-pressed', String(flipped));
+        };
+        tkEl.addEventListener('click', toggleTicket);
+        tkEl.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            toggleTicket();
+          }
+        });
+        document.getElementById('btnFlipTicket').addEventListener('click', toggleTicket);
+
+        // Reset Registration
+        document.getElementById('btnResetTicket').addEventListener('click', resetForm);
+        document.getElementById('btnResetBack').addEventListener('click', (e) => {
+          e.stopPropagation();
+          resetForm();
+        });
+      });
+    })();
+  </script>
+</body>
+</html>

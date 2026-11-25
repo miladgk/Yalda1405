@@ -1,0 +1,405 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --bg-obsidian: #090509;
+    --bg-burgundy: #1b0913;
+    --ruby: #a61c31;
+    --ruby-bright: #dc2645;
+    --gold: #dfb16b;
+    --gold-bright: #fae3bb;
+    --aurora: #3b6998;
+    --aurora-light: #9cd4fa;
+    --emerald: #34d399;
+    --amber: #f59e0b;
+
+    --text-main: #fbf6f0;
+    --text-soft: #e2d4dc;
+    --text-muted: #bfb0b8;
+
+    --ease-stage: cubic-bezier(0.22, 1, 0.36, 1);
+    --ease-flip: cubic-bezier(0.34, 1.24, 0.64, 1);
+  }
+
+  html,
+  body,
+  #root {
+    width: 100%;
+    min-height: 100dvh;
+    margin: 0;
+    padding: 0;
+    background-color: var(--bg-obsidian);
+    font-family: 'Vazirmatn', system-ui, -apple-system, sans-serif;
+    color: var(--text-main);
+    -webkit-font-smoothing: antialiased;
+    -webkit-tap-highlight-color: transparent;
+    overflow-x: hidden;
+  }
+
+  body {
+    background:
+      radial-gradient(circle at 16% 14%, rgba(166, 28, 49, 0.28), transparent 46%),
+      radial-gradient(circle at 86% 84%, rgba(59, 105, 152, 0.24), transparent 48%),
+      linear-gradient(158deg, #090509 0%, #1b0913 54%, #090509 100%);
+  }
+}
+
+/* =========================================================================
+   AMBIENT ORBS, SKY, SHAMSEH & LIQUID GLASS STAGE
+   ========================================================================= */
+.orb-ruby {
+  background: radial-gradient(circle, rgba(166, 28, 49, 0.72) 0%, transparent 70%);
+  animation: driftA 20s ease-in-out infinite alternate;
+}
+
+.orb-gold {
+  background: radial-gradient(circle, rgba(223, 177, 107, 0.48) 0%, transparent 72%);
+  animation: driftB 24s ease-in-out infinite alternate;
+}
+
+.orb-aurora {
+  background: radial-gradient(circle, rgba(59, 105, 152, 0.62) 0%, transparent 72%);
+  animation: driftC 26s ease-in-out infinite alternate;
+}
+
+@keyframes driftA {
+  0% { transform: translate3d(0, 0, 0) scale(1); }
+  100% { transform: translate3d(-42px, 34px, 0) scale(1.1); }
+}
+@keyframes driftB {
+  0% { transform: translate3d(0, 0, 0) scale(1); }
+  100% { transform: translate3d(38px, -28px, 0) scale(1.08); }
+}
+@keyframes driftC {
+  0% { transform: translate3d(0, 0, 0) scale(1); }
+  100% { transform: translate3d(-34px, -22px, 0) scale(1.07); }
+}
+
+.star-twinkle { animation: starPulse 6.2s ease-in-out infinite; }
+.star-twinkle-slow { animation: starPulse 9.4s ease-in-out infinite 2.1s; }
+.star-twinkle-alt { animation: starPulse 7.8s ease-in-out infinite 3.6s; }
+.constellation-glow { animation: lineBreath 11s ease-in-out infinite; }
+
+@keyframes starPulse {
+  0%, 100% { opacity: 0.32; }
+  50% { opacity: 0.78; }
+}
+@keyframes lineBreath {
+  0%, 100% { stroke-opacity: 0.055; }
+  50% { stroke-opacity: 0.088; }
+}
+
+.shamseh-svg {
+  animation: spinShamseh 100s linear infinite;
+  will-change: transform;
+}
+
+@keyframes spinShamseh {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.glass-stage-card {
+  background: linear-gradient(
+    152deg,
+    rgba(36, 15, 27, 0.72) 0%,
+    rgba(13, 8, 18, 0.84) 52%,
+    rgba(26, 11, 21, 0.76) 100%
+  );
+  -webkit-backdrop-filter: blur(22px) saturate(140%);
+  backdrop-filter: blur(22px) saturate(140%);
+  border: 1px solid rgba(223, 177, 107, 0.28);
+  border-top-color: rgba(255, 255, 255, 0.24);
+  border-right-color: rgba(255, 255, 255, 0.14);
+  box-shadow:
+    0 34px 78px -18px rgba(0, 0, 0, 0.86),
+    0 0 46px -14px rgba(166, 28, 49, 0.42),
+    inset 0 1px 0 rgba(255, 255, 255, 0.22),
+    inset 0 -1px 0 rgba(223, 177, 107, 0.16);
+}
+
+.glass-sheen::before {
+  content: '';
+  position: absolute;
+  top: -60%;
+  left: -40%;
+  width: 180%;
+  height: 200%;
+  background: linear-gradient(
+    118deg,
+    transparent 40%,
+    rgba(255, 255, 255, 0.045) 49%,
+    rgba(223, 177, 107, 0.035) 53%,
+    transparent 62%
+  );
+  animation: liquidSweep 14s ease-in-out infinite;
+}
+
+@keyframes liquidSweep {
+  0%, 100% { transform: translateX(15%); }
+  50% { transform: translateX(-15%); }
+}
+
+.focal-pomegranate-halo {
+  animation: haloBreath 4.6s ease-in-out infinite;
+}
+
+@keyframes haloBreath {
+  0%, 100% { box-shadow: 0 0 20px -6px rgba(166, 28, 49, 0.72), 0 0 10px -4px rgba(223, 177, 107, 0.28); }
+  50% { box-shadow: 0 0 28px -4px rgba(220, 38, 69, 0.85), 0 0 16px -3px rgba(223, 177, 107, 0.45); }
+}
+
+/* 3D Flip Cards & Double-Sided Ticket */
+.perspective-1100 {
+  perspective: 1100px;
+}
+
+.perspective-1400 {
+  perspective: 1400px;
+}
+
+.preserve-3d {
+  transform-style: preserve-3d;
+  -webkit-transform-style: preserve-3d;
+}
+
+.backface-hidden {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.flip-transition {
+  transition: transform 0.64s var(--ease-flip);
+}
+
+.ticket-transition {
+  transition: transform 0.72s var(--ease-flip);
+}
+
+.flip-face-front {
+  transform: rotateY(0deg) translateZ(1px);
+}
+
+.flip-face-back {
+  transform: rotateY(180deg) translateZ(1px);
+}
+
+.is-flipped-3d {
+  transform: rotateY(180deg) translateZ(0);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .hover-flip-card:hover .hover-flip-inner {
+    transform: rotateY(180deg) translateZ(0);
+  }
+  .hover-flip-card.is-flipped-manual:hover .hover-flip-inner {
+    transform: rotateY(0deg) translateZ(0);
+  }
+}
+
+.holo-sheen::before {
+  content: '';
+  position: absolute;
+  inset: -45%;
+  background: conic-gradient(
+    from 115deg at 50% 50%,
+    rgba(223, 177, 107, 0.14),
+    rgba(156, 212, 250, 0.11),
+    rgba(220, 38, 69, 0.15),
+    rgba(255, 255, 255, 0.13),
+    rgba(223, 177, 107, 0.14)
+  );
+  opacity: 0.55;
+  pointer-events: none;
+  animation: holoRotate 14s linear infinite;
+}
+
+@keyframes holoRotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.shake-error {
+  animation: errShake 0.35s ease;
+}
+
+@keyframes errShake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-6px); }
+  50% { transform: translateX(6px); }
+  75% { transform: translateX(-3px); }
+}
+
+.step-enter-forward {
+  animation: stepFadeIn 0.2s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.step-enter-backward {
+  animation: stepFadeIn 0.2s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes stepFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Custom Thin Scrollbar inside Stage */
+.stage-scroll::-webkit-scrollbar {
+  width: 5px;
+}
+.stage-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+.stage-scroll::-webkit-scrollbar-thumb {
+  background: rgba(223, 177, 107, 0.34);
+  border-radius: 999px;
+}
+
+/* Bookend typography subtle warm gold glow */
+.bk-edge {
+  color: #fce6be;
+  text-shadow: 0 0 11px rgba(223, 177, 107, 0.42);
+  font-weight: 800;
+}
+
+/* Guilloché Wave Living Heartbeat (Lub-Dub) */
+.guilloche-wave-beat {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: guillocheWaveBeat 2.8s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+}
+
+.guilloche-aura-pulse {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: guillocheAuraPulse 2.8s ease-in-out infinite;
+}
+
+.guilloche-core-beat {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: guillocheCoreBeat 2.8s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+}
+
+.guilloche-signal-left,
+.guilloche-signal-right {
+  stroke-dasharray: 52 280;
+  animation: guillocheSignalSweep 2.8s cubic-bezier(0.25, 0.8, 0.35, 1) infinite;
+}
+
+@keyframes guillocheWaveBeat {
+  0%, 100% {
+    transform: scaleY(1);
+    opacity: 0.78;
+  }
+  10% {
+    transform: scaleY(1.36);
+    opacity: 1;
+  }
+  20% {
+    transform: scaleY(0.92);
+    opacity: 0.84;
+  }
+  30% {
+    transform: scaleY(1.24);
+    opacity: 0.98;
+  }
+  44% {
+    transform: scaleY(1);
+    opacity: 0.8;
+  }
+}
+
+@keyframes guillocheAuraPulse {
+  0%, 100% {
+    opacity: 0.25;
+    transform: scale(0.92, 0.85);
+  }
+  12% {
+    opacity: 0.85;
+    transform: scale(1.12, 1.25);
+  }
+  22% {
+    opacity: 0.35;
+    transform: scale(0.98, 0.95);
+  }
+  32% {
+    opacity: 0.72;
+    transform: scale(1.08, 1.15);
+  }
+  48% {
+    opacity: 0.25;
+    transform: scale(0.92, 0.85);
+  }
+}
+
+@keyframes guillocheCoreBeat {
+  0%, 100% {
+    transform: scale(0.85);
+    opacity: 0.58;
+  }
+  10% {
+    transform: scale(1.42);
+    opacity: 1;
+  }
+  20% {
+    transform: scale(0.95);
+    opacity: 0.74;
+  }
+  30% {
+    transform: scale(1.28);
+    opacity: 0.96;
+  }
+  45% {
+    transform: scale(0.85);
+    opacity: 0.58;
+  }
+}
+
+@keyframes guillocheSignalSweep {
+  0%, 8% {
+    stroke-dashoffset: 60;
+    opacity: 0;
+  }
+  16% {
+    opacity: 0.95;
+  }
+  58% {
+    stroke-dashoffset: -275;
+    opacity: 0.45;
+  }
+  72%, 100% {
+    stroke-dashoffset: -332;
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .orb-ruby,
+  .orb-gold,
+  .orb-aurora,
+  .shamseh-svg,
+  .glass-sheen::before,
+  .holo-sheen::before,
+  .star-twinkle,
+  .star-twinkle-slow,
+  .star-twinkle-alt,
+  .constellation-glow,
+  .focal-pomegranate-halo,
+  .guilloche-wave-beat,
+  .guilloche-aura-pulse,
+  .guilloche-core-beat,
+  .guilloche-signal-left,
+  .guilloche-signal-right,
+  .step-enter-forward,
+  .step-enter-backward {
+    animation: none !important;
+  }
+  .glass-stage-card {
+    transform: none !important;
+  }
+}

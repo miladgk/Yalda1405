@@ -1,0 +1,6 @@
+{
+  "name": "جشن شب یلدا ۱۴۰۵ | هلسینکی",
+  "description": "سامانه دعوت‌نامه و ثبت‌نام جشن شب یلدا ۱۴۰۵ انجمن فرهنگی ایرانیان هلسینکی",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
