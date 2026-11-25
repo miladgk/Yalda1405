@@ -30,8 +30,8 @@ export const EVENT_CONFIG: EventConfig = {
   iban: 'FI00 0000 0000 0000 00',
   contact: 'avidry.finland@gmail.com',
   pricePerPerson: 5,
-  maxCapacity: 80,
-  initialBooked: 27,
+  maxCapacity: 40,
+  initialBooked: 0,
 };
 
 export interface CapacityStatus {

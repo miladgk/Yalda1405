@@ -7,6 +7,7 @@ import { StepInvitation } from './components/StepInvitation';
 import { StepPayment } from './components/StepPayment';
 import { StepTicket } from './components/StepTicket';
 import { SvgDefs } from './components/SvgDefs';
+import { YaldaLandingCover } from './components/YaldaLandingCover';
 import {
   EVENT_CONFIG,
   INITIAL_FORM_STATE,
@@ -32,10 +33,21 @@ import {
 import { isGoogleAuthConfigured, type GoogleUserInfo } from './utils/googleAuth';
 
 export default function App() {
+  const [entryPhase, setEntryPhase] = useState<'cover' | 'exiting' | 'entered'>('cover');
+  const enterTimerRef = useRef<number | null>(null);
+  const stepTimerRef = useRef<number | null>(null);
   const [step, setStep] = useState<StepId>(1);
+  const [headerStep, setHeaderStep] = useState<StepId>(1);
+  const [stepPhase, setStepPhase] = useState<'enter' | 'exit'>('enter');
   const [direction, setDirection] = useState<'forward' | 'backward'>('forward');
   const [capacityTotal, setCapacityTotal] = useState(EVENT_CONFIG.maxCapacity);
   const [bookedCount, setBookedCount] = useState(EVENT_CONFIG.initialBooked);
+  const [capacityLoading, setCapacityLoading] = useState(() =>
+    Boolean(
+      typeof window !== 'undefined' &&
+        (window.google?.script?.run || isGasUrlConfigured())
+    )
+  );
   const [snowEnabled, setSnowEnabled] = useState(() => {
     if (typeof window === 'undefined') return true;
     try {
@@ -60,9 +72,24 @@ export default function App() {
 
   useEffect(() => {
     return () => {
+      if (enterTimerRef.current !== null) {
+        window.clearTimeout(enterTimerRef.current);
+      }
+      if (stepTimerRef.current !== null) {
+        window.clearTimeout(stepTimerRef.current);
+      }
       disposeYaldaAudio();
     };
   }, []);
+
+  const handleEnterInvitation = () => {
+    if (entryPhase !== 'cover') return;
+    setEntryPhase('exiting');
+    enterTimerRef.current = window.setTimeout(() => {
+      setEntryPhase('entered');
+      enterTimerRef.current = null;
+    }, 560);
+  };
 
   const handleToggleAudio = () => {
     const next = !audioEnabled;
@@ -116,15 +143,20 @@ export default function App() {
       runner
         .withSuccessHandler((raw) => {
           applyEventStatus(raw as GasEventStatusResponse | null);
+          setCapacityLoading(false);
         })
         .withFailureHandler(() => {
           // Keep initial defaults gracefully
+          setCapacityLoading(false);
         })
         .getEventStatus();
       return;
     }
 
-    if (!isGasUrlConfigured()) return;
+    if (!isGasUrlConfigured()) {
+      setCapacityLoading(false);
+      return;
+    }
 
     let cancelled = false;
     fetchEventStatusFromGas()
@@ -135,6 +167,11 @@ export default function App() {
       })
       .catch(() => {
         // Keep initial defaults gracefully on network error
+      })
+      .finally(() => {
+        if (!cancelled) {
+          setCapacityLoading(false);
+        }
       });
 
     return () => {
@@ -143,11 +180,25 @@ export default function App() {
   }, []);
 
   const navigateTo = (target: StepId) => {
-    setDirection(target >= step ? 'forward' : 'backward');
-    setStep(target);
-    if (scrollRef.current) {
-      scrollRef.current.scrollTop = 0;
+    if (target === headerStep && stepPhase === 'enter') return;
+
+    if (stepTimerRef.current !== null) {
+      window.clearTimeout(stepTimerRef.current);
+      stepTimerRef.current = null;
     }
+
+    setDirection(target >= step ? 'forward' : 'backward');
+    setHeaderStep(target);
+    setStepPhase('exit');
+
+    stepTimerRef.current = window.setTimeout(() => {
+      setStep(target);
+      setStepPhase('enter');
+      stepTimerRef.current = null;
+      if (scrollRef.current) {
+        scrollRef.current.scrollTop = 0;
+      }
+    }, 190);
   };
 
   const handleFieldChange = <K extends keyof RegistrationFormState>(
@@ -191,9 +242,9 @@ export default function App() {
     }));
     setStep2Error((prev) =>
       prev &&
-      (prev.field === 'googleAuth' ||
-        prev.field === 'email' ||
-        (Boolean(user.name) && prev.field === 'fullName'))
+        (prev.field === 'googleAuth' ||
+          prev.field === 'email' ||
+          (Boolean(user.name) && prev.field === 'fullName'))
         ? null
         : prev
     );
@@ -369,23 +420,37 @@ export default function App() {
     navigateTo(1);
   };
 
-  const stageAnimClass = direction === 'forward' ? 'step-enter-forward' : 'step-enter-backward';
+  const stageAnimClass =
+    stepPhase === 'exit'
+      ? direction === 'forward'
+        ? 'step-exit-forward pointer-events-none'
+        : 'step-exit-backward pointer-events-none'
+      : direction === 'forward'
+        ? 'step-enter-forward'
+        : 'step-enter-backward';
 
   return (
     <div className="relative flex min-h-dvh w-full items-center justify-center px-3 py-4 sm:px-6 sm:py-6">
       <SvgDefs />
       <AmbientBackdrop snowEnabled={snowEnabled} burstTrigger={burstTrigger} />
 
-      <main className="relative z-10 w-full max-w-[840px]">
-        <section
-          aria-label="ثبت‌نام جشن شب یلدا ۱۴۰۵ هلسینکی"
-          className="glass-stage-card relative flex max-h-[calc(100dvh-2rem)] w-full flex-col overflow-hidden rounded-3xl sm:max-h-[calc(100dvh-3rem)]"
-        >
-          <div className="glass-sheen pointer-events-none absolute inset-0 z-0 overflow-hidden rounded-3xl" aria-hidden="true" />
+      <main className={`relative z-10 w-full ${entryPhase === 'entered' ? 'max-w-[840px]' : 'max-w-[700px]'}`}>
+        {entryPhase !== 'entered' ? (
+          <YaldaLandingCover
+            onEnter={handleEnterInvitation}
+            isExiting={entryPhase === 'exiting'}
+          />
+        ) : (
+          <section
+            aria-label="ثبت‌نام جشن شب یلدا ۱۴۰۵ هلسینکی"
+            className="glass-stage-card yalda-3d-enter relative flex max-h-[calc(100dvh-2rem)] w-full flex-col overflow-hidden rounded-3xl sm:max-h-[calc(100dvh-3rem)]"
+          >
+            <div className="glass-sheen pointer-events-none absolute inset-0 z-0 overflow-hidden rounded-3xl" aria-hidden="true" />
 
           <StageHeader
-            currentStep={step}
+            currentStep={headerStep}
             capacity={capacity}
+            capacityLoading={capacityLoading}
             snowEnabled={snowEnabled}
             audioEnabled={audioEnabled}
             onToggleSnow={() => setSnowEnabled((prev) => !prev)}
@@ -393,84 +458,83 @@ export default function App() {
             onSelectStep={navigateTo}
           />
 
-          {/* Stage Content Viewport */}
-          <div
-            ref={scrollRef}
-            className="stage-scroll relative z-[4] min-h-0 flex-1 overflow-y-auto px-4 py-4 sm:px-7 sm:py-5"
-          >
-            <div key={step} className={stageAnimClass}>
-              {step === 1 && <StepInvitation isFull={capacity.isFull} />}
-              {step === 2 && (
-                <StepDetails
-                  form={form}
-                  remainingSeats={capacity.remaining}
-                  errorMsg={step2Error?.message ?? null}
-                  errorField={step2Error?.field}
-                  googleAuthEnabled={googleAuthEnabled}
-                  googleUser={googleUser}
-                  onGoogleSignInSuccess={handleGoogleSignInSuccess}
-                  onGoogleSignInError={handleGoogleSignInError}
-                  onSwitchGoogleAccount={handleSwitchGoogleAccount}
-                  onChangeField={handleFieldChange}
-                  onAdjustGuests={handleAdjustGuests}
-                />
-              )}
-              {step === 3 && (
-                <StepPayment
-                  form={form}
-                  errorMsg={step3Error}
-                  onChangeField={handleFieldChange}
-                  onToggleVolunteer={handleToggleVolunteer}
-                />
-              )}
-              {step === 4 && ticket && <StepTicket ticket={ticket} onReset={handleReset} />}
-            </div>
-          </div>
-
-          {/* Pinned Footer Navigation (hidden on Step 4) */}
-          {step !== 4 && (
-            <footer
-              className={`relative z-10 flex shrink-0 items-center gap-3 border-t border-white/10 bg-gradient-to-t from-[#0a060d]/55 to-transparent px-4 py-3 sm:px-7 sm:py-3.5 ${
-                step === 1 ? 'justify-center' : 'justify-between'
-              }`}
+            {/* Stage Content Viewport */}
+            <div
+              ref={scrollRef}
+              className="stage-scroll relative z-[4] min-h-0 flex-1 overflow-x-hidden overflow-y-auto px-4 py-4 sm:px-7 sm:py-5"
             >
-              {step > 1 && (
+              <div key={step} className={stageAnimClass}>
+                {step === 1 && <StepInvitation isFull={capacity.isFull} />}
+                {step === 2 && (
+                  <StepDetails
+                    form={form}
+                    remainingSeats={capacity.remaining}
+                    errorMsg={step2Error?.message ?? null}
+                    errorField={step2Error?.field}
+                    googleAuthEnabled={googleAuthEnabled}
+                    googleUser={googleUser}
+                    onGoogleSignInSuccess={handleGoogleSignInSuccess}
+                    onGoogleSignInError={handleGoogleSignInError}
+                    onSwitchGoogleAccount={handleSwitchGoogleAccount}
+                    onChangeField={handleFieldChange}
+                    onAdjustGuests={handleAdjustGuests}
+                  />
+                )}
+                {step === 3 && (
+                  <StepPayment
+                    form={form}
+                    errorMsg={step3Error}
+                    onChangeField={handleFieldChange}
+                    onToggleVolunteer={handleToggleVolunteer}
+                  />
+                )}
+                {step === 4 && ticket && <StepTicket ticket={ticket} onReset={handleReset} />}
+              </div>
+            </div>
+
+            {/* Pinned Footer Navigation (hidden on Step 4) */}
+            {step !== 4 && (
+              <footer
+                className={`relative z-10 flex shrink-0 items-center gap-3 border-t border-white/10 bg-gradient-to-t from-[#0a060d]/55 to-transparent px-4 py-3 sm:px-7 sm:py-3.5 ${step === 1 ? 'justify-center' : 'justify-between'
+                  }`}
+              >
+                {step > 1 && (
+                  <button
+                    type="button"
+                    onClick={handlePrev}
+                    className="inline-flex min-h-[44px] cursor-pointer items-center justify-center gap-1.5 rounded-xl border border-white/16 bg-white/[0.06] px-4 py-2 text-xs font-bold text-[#e2d4dc] transition hover:border-[#dfb16b]/45 hover:bg-white/12 hover:text-[#fbf6f0] sm:px-5 sm:text-sm"
+                  >
+                    <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                    <span>مرحله قبل</span>
+                  </button>
+                )}
+
                 <button
                   type="button"
-                  onClick={handlePrev}
-                  className="inline-flex min-h-[44px] cursor-pointer items-center justify-center gap-1.5 rounded-xl border border-white/16 bg-white/[0.06] px-4 py-2 text-xs font-bold text-[#e2d4dc] transition hover:border-[#dfb16b]/45 hover:bg-white/12 hover:text-[#fbf6f0] sm:px-5 sm:text-sm"
+                  onClick={handleNext}
+                  disabled={capacity.isFull || submitting}
+                  className={`inline-flex min-h-[44px] cursor-pointer items-center justify-center gap-2 rounded-xl border border-[#fae3bb]/55 bg-gradient-to-l from-[#98152e] via-[#c01e3a] to-[#cf9844] px-6 py-2 text-xs font-extrabold text-white shadow-[0_10px_26px_-8px_rgba(166,28,49,0.72),inset_0_1px_0_rgba(255,255,255,0.3)] transition hover:-translate-y-0.5 hover:brightness-108 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-45 disabled:hover:translate-y-0 sm:text-sm ${step === 1 ? 'w-full max-w-[340px]' : ''
+                    }`}
                 >
-                  <ArrowRight className="h-4 w-4" aria-hidden="true" />
-                  <span>مرحله قبل</span>
+                  {submitting && <Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" />}
+                  <span>
+                    {step === 1
+                      ? capacity.isFull
+                        ? 'ظرفیت تکمیل شد'
+                        : 'شروع ثبت‌نام'
+                      : step === 2
+                        ? 'مرحله بعد: پرداخت'
+                        : submitting
+                          ? 'در حال ثبت اطلاعات...'
+                          : 'تکمیل ثبت‌نام و دریافت بلیت'}
+                  </span>
+                  {step === 3 && !submitting && <Sparkles className="h-4 w-4" aria-hidden="true" />}
+                  {step < 3 && <ArrowLeft className="h-4 w-4" aria-hidden="true" />}
                 </button>
-              )}
-
-              <button
-                type="button"
-                onClick={handleNext}
-                disabled={capacity.isFull || submitting}
-                className={`inline-flex min-h-[44px] cursor-pointer items-center justify-center gap-2 rounded-xl border border-[#fae3bb]/55 bg-gradient-to-l from-[#98152e] via-[#c01e3a] to-[#cf9844] px-6 py-2 text-xs font-extrabold text-white shadow-[0_10px_26px_-8px_rgba(166,28,49,0.72),inset_0_1px_0_rgba(255,255,255,0.3)] transition hover:-translate-y-0.5 hover:brightness-108 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-45 disabled:hover:translate-y-0 sm:text-sm ${
-                  step === 1 ? 'w-full max-w-[340px]' : ''
-                }`}
-              >
-                {submitting && <Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" />}
-                <span>
-                  {step === 1
-                    ? capacity.isFull
-                      ? 'ظرفیت تکمیل شد'
-                      : 'شروع ثبت‌نام'
-                    : step === 2
-                      ? 'مرحله بعد: پرداخت'
-                      : submitting
-                        ? 'در حال ثبت اطلاعات...'
-                        : 'تکمیل ثبت‌نام و دریافت بلیت'}
-                </span>
-                {step === 3 && !submitting && <Sparkles className="h-4 w-4" aria-hidden="true" />}
-                {step < 3 && <ArrowLeft className="h-4 w-4" aria-hidden="true" />}
-              </button>
-            </footer>
-          )}
-        </section>
+              </footer>
+            )}
+          </section>
+        )}
       </main>
     </div>
   );

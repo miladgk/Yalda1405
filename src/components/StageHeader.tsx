@@ -6,6 +6,7 @@ import { GuillocheWave } from './GuillocheWave';
 interface StageHeaderProps {
   currentStep: StepId;
   capacity: CapacityStatus;
+  capacityLoading?: boolean;
   snowEnabled: boolean;
   audioEnabled: boolean;
   onToggleSnow: () => void;
@@ -23,6 +24,7 @@ const STEPS: { id: StepId; label: string }[] = [
 export function StageHeader({
   currentStep,
   capacity,
+  capacityLoading = false,
   snowEnabled,
   audioEnabled,
   onToggleSnow,
@@ -67,16 +69,22 @@ export function StageHeader({
           >
             <div className="flex items-center justify-between gap-2 text-[11px] font-semibold tabular-nums text-[#fae3bb] sm:text-xs">
               <span className="whitespace-nowrap">
-                {capacity.isFull
-                  ? 'ظرفیت تکمیل شد'
-                  : `${toFa(capacity.remaining)} صندلی باقی‌مانده از ${toFa(capacity.capacity)}`}
+                {capacityLoading
+                  ? 'در حال بررسی ظرفیت...'
+                  : capacity.isFull
+                    ? 'ظرفیت تکمیل شد'
+                    : `${toFa(capacity.remaining)} صندلی باقی‌مانده از ${toFa(capacity.capacity)}`}
               </span>
             </div>
             <div className="h-1 w-full overflow-hidden rounded-full bg-white/10">
-              <div
-                className={`h-full rounded-full bg-gradient-to-l ${barColor} transition-all duration-500`}
-                style={{ width: `${capacity.percentFilled}%` }}
-              />
+              {capacityLoading ? (
+                <div className="h-full w-1/2 animate-pulse rounded-full bg-gradient-to-l from-[#dfb16b]/70 to-[#fae3bb]/40" />
+              ) : (
+                <div
+                  className={`h-full rounded-full bg-gradient-to-l ${barColor} transition-all duration-500`}
+                  style={{ width: `${capacity.percentFilled}%` }}
+                />
+              )}
             </div>
           </div>
 
@@ -122,47 +130,56 @@ export function StageHeader({
       {/* 4-Step Progress Navigation */}
       <nav
         aria-label="مراحل ثبت‌نام"
-        className="grid grid-cols-4 gap-1 rounded-xl border border-white/10 bg-[#0a060d]/55 p-1 sm:gap-1.5"
+        className="rounded-xl border border-white/10 bg-[#0a060d]/55 p-1"
       >
-        {STEPS.map((step) => {
-          const isActive = currentStep === step.id;
-          const isDone = currentStep > step.id;
-          const canNavigate = isDone && currentStep !== 4;
+        <div className="relative grid grid-cols-4">
+          {/* Gliding Active Step Indicator */}
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-y-0 right-0 w-1/4 rounded-lg border border-[#dfb16b]/55 bg-gradient-to-br from-[#a61c31]/55 to-[#dfb16b]/22 shadow-[0_6px_18px_-6px_rgba(166,28,49,0.75)] transition-transform duration-400 ease-[cubic-bezier(0.22,1,0.36,1)]"
+            style={{ transform: `translateX(${-(currentStep - 1) * 100}%)` }}
+          />
 
-          return (
-            <button
-              key={step.id}
-              type="button"
-              disabled={!canNavigate && !isActive}
-              aria-current={isActive ? 'step' : undefined}
-              onClick={() => {
-                if (canNavigate) onSelectStep(step.id);
-              }}
-              className={`flex min-h-[36px] items-center justify-center gap-1 rounded-lg border px-1 py-1 text-[11px] font-semibold whitespace-nowrap transition-all sm:gap-2 sm:px-2.5 sm:text-xs ${
-                isActive
-                  ? 'border-[#dfb16b]/55 bg-gradient-to-br from-[#a61c31]/50 to-[#dfb16b]/20 text-[#fbf6f0] shadow-[0_6px_16px_-6px_rgba(166,28,49,0.65)]'
-                  : isDone
-                    ? `border-transparent text-[#fae3bb] ${
-                        canNavigate ? 'cursor-pointer hover:border-[#dfb16b]/35 hover:bg-[#dfb16b]/12' : 'cursor-default'
-                      }`
-                    : 'cursor-default border-transparent text-[#bfb0b8]'
-              }`}
-            >
-              <span
-                className={`inline-flex h-4 w-4 shrink-0 items-center justify-center rounded-full border text-[9px] font-extrabold tabular-nums sm:h-5 sm:w-5 sm:text-[10px] ${
+          {STEPS.map((step) => {
+            const isActive = currentStep === step.id;
+            const isDone = currentStep > step.id;
+            const canNavigate = isDone && currentStep !== 4;
+
+            return (
+              <button
+                key={step.id}
+                type="button"
+                disabled={!canNavigate && !isActive}
+                aria-current={isActive ? 'step' : undefined}
+                onClick={() => {
+                  if (canNavigate) onSelectStep(step.id);
+                }}
+                className={`relative z-10 flex min-h-[36px] items-center justify-center gap-1 rounded-lg border border-transparent px-1 py-1 text-[11px] font-semibold whitespace-nowrap transition-colors duration-200 sm:gap-2 sm:px-2.5 sm:text-xs ${
                   isActive
-                    ? 'border-[#fae3bb] bg-[#dfb16b] text-[#170a11]'
+                    ? 'text-[#fbf6f0]'
                     : isDone
-                      ? 'border-[#34d399]/55 bg-[#34d399]/20 text-[#6ee7b7]'
-                      : 'border-white/18 bg-white/[0.07] text-[#bfb0b8]'
+                      ? `text-[#fae3bb] ${
+                          canNavigate ? 'cursor-pointer hover:bg-[#dfb16b]/12' : 'cursor-default'
+                        }`
+                      : 'cursor-default text-[#bfb0b8]'
                 }`}
               >
-                {isDone ? <Check className="h-2.5 w-2.5 sm:h-3 sm:w-3" aria-hidden="true" /> : toFa(step.id)}
-              </span>
-              <span>{step.label}</span>
-            </button>
-          );
-        })}
+                <span
+                  className={`inline-flex h-4 w-4 shrink-0 items-center justify-center rounded-full border text-[9px] font-extrabold tabular-nums transition-colors duration-200 sm:h-5 sm:w-5 sm:text-[10px] ${
+                    isActive
+                      ? 'border-[#fae3bb] bg-[#dfb16b] text-[#170a11]'
+                      : isDone
+                        ? 'border-[#34d399]/55 bg-[#34d399]/20 text-[#6ee7b7]'
+                        : 'border-white/18 bg-white/[0.07] text-[#bfb0b8]'
+                  }`}
+                >
+                  {isDone ? <Check className="h-2.5 w-2.5 sm:h-3 sm:w-3" aria-hidden="true" /> : toFa(step.id)}
+                </span>
+                <span>{step.label}</span>
+              </button>
+            );
+          })}
+        </div>
       </nav>
 
       {/* Ultra-Fine Pulsing Guilloche Wave Divider */}
