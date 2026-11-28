@@ -120,7 +120,7 @@ export function YaldaMiniCalendarCard() {
                   <span
                     key={day}
                     aria-current={isEventDay ? 'date' : undefined}
-                    title={isEventDay ? `شب یلدا — ${EVENT_CONFIG.date}` : undefined}
+                    title={isEventDay ? `مراسم شب یلدا — ${EVENT_CONFIG.date}` : undefined}
                     className={`flex h-6 items-center justify-center rounded-md text-[11px] transition-colors ${
                       isEventDay
                         ? 'bg-gradient-to-br from-[#a61c31] to-[#cf9844] font-extrabold text-white shadow-[0_0_12px_rgba(223,177,107,0.55)] ring-1 ring-[#fae3bb]/75'
@@ -137,7 +137,7 @@ export function YaldaMiniCalendarCard() {
           </div>
 
           <p className="border-t border-white/10 pt-1.5 text-center text-[11px] font-medium text-[#e2d4dc]">
-            شب یلدا <span aria-hidden="true">·</span> یکشنبه ۲۹ آذر / ۲۰ دسامبر
+            مراسم شب یلدا <span aria-hidden="true">·</span> یکشنبه ۲۹ آذر / ۲۰ دسامبر
           </p>
         </div>
 

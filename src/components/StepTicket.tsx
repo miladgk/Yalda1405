@@ -310,13 +310,13 @@ export function StepTicket({ ticket, onReset }: StepTicketProps) {
       {shareOpen && (
         <div
           role="region"
-          aria-label="اشتراک‌گذاری دعوت‌نامه جشن یلدا"
+          aria-label="اشتراک‌گذاری دعوت‌نامه مراسم شب یلدا"
           data-testid="share-panel"
           className="w-full max-w-[560px] space-y-3 rounded-2xl border border-[#dfb16b]/35 bg-[#0e0814]/92 p-4 text-right shadow-[0_14px_34px_-12px_rgba(0,0,0,0.75)]"
         >
           <div className="flex items-center justify-between gap-2">
             <span className="text-xs font-bold text-[#fae3bb] sm:text-sm">
-              دعوت از دوستان به جشن شب یلدا ۱۴۰۵
+              دعوت از دوستان به مراسم شب یلدا ۱۴۰۵
             </span>
             <button
               type="button"

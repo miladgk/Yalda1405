@@ -67,7 +67,7 @@ export function YaldaLandingCover({ onEnter, isExiting = false }: YaldaLandingCo
         onKeyDown={handleKeyDown}
         onPointerMove={handlePointerMove}
         onPointerLeave={handlePointerLeave}
-        aria-label="ورود به دعوت‌نامه و ثبت‌نام جشن شب یلدا ۱۴۰۵"
+        aria-label="ورود به دعوت‌نامه و ثبت‌نام مراسم شب یلدا ۱۴۰۵"
         data-testid="yalda-landing-cover"
         style={
           isExiting
@@ -151,7 +151,7 @@ export function YaldaLandingCover({ onEnter, isExiting = false }: YaldaLandingCo
             className="mb-3 bg-gradient-to-l from-[#fffaf4] via-[#fae3bb] to-[#ffa3b6] bg-clip-text text-2xl font-black leading-snug text-transparent drop-shadow-[0_10px_18px_rgba(0,0,0,0.6)] sm:text-4xl"
             style={{ transform: 'translateZ(42px)' }}
           >
-            شب یلدا در راه است...
+            مراسم شب یلدا در راه است...
           </h1>
 
           <p

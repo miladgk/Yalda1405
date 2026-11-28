@@ -1,12 +1,10 @@
 import { Check, Snowflake, Volume2, VolumeX } from 'lucide-react';
-import { EVENT_CONFIG, type CapacityStatus, type StepId } from '../types/yalda';
+import { EVENT_CONFIG, type StepId } from '../types/yalda';
 import { toFa } from '../utils/yaldaLogic';
 import { GuillocheWave } from './GuillocheWave';
 
 interface StageHeaderProps {
   currentStep: StepId;
-  capacity: CapacityStatus;
-  capacityLoading?: boolean;
   snowEnabled: boolean;
   audioEnabled: boolean;
   onToggleSnow: () => void;
@@ -23,20 +21,12 @@ const STEPS: { id: StepId; label: string }[] = [
 
 export function StageHeader({
   currentStep,
-  capacity,
-  capacityLoading = false,
   snowEnabled,
   audioEnabled,
   onToggleSnow,
   onToggleAudio,
   onSelectStep,
 }: StageHeaderProps) {
-  const barColor = capacity.isFull
-    ? 'from-[#a61c31] to-[#dc2645]'
-    : capacity.isLow
-      ? 'from-[#f59e0b] to-[#dc2645]'
-      : 'from-[#34d399] to-[#dfb16b]';
-
   return (
     <header className="relative z-10 shrink-0 bg-gradient-to-b from-white/[0.045] to-black/15 px-3.5 pt-3 sm:px-6 sm:pt-4">
       <div className="mb-2.5 flex flex-wrap items-center justify-between gap-2.5 sm:mb-3 sm:flex-nowrap sm:gap-3">
@@ -60,39 +50,13 @@ export function StageHeader({
           </div>
         </div>
 
-        {/* Capacity Summary & Snow Control */}
-        <div className="flex w-full shrink-0 items-center justify-between gap-2 sm:w-auto sm:justify-end sm:gap-2.5">
-          <div
-            className="flex flex-1 flex-col gap-1.5 rounded-xl border border-white/12 bg-[#0a060d]/60 px-3 py-1.5 sm:min-w-[168px] sm:flex-initial"
-            aria-live="polite"
-            data-testid="capacity-meter"
-          >
-            <div className="flex items-center justify-between gap-2 text-[11px] font-semibold tabular-nums text-[#fae3bb] sm:text-xs">
-              <span className="whitespace-nowrap">
-                {capacityLoading
-                  ? 'در حال بررسی ظرفیت...'
-                  : capacity.isFull
-                    ? 'ظرفیت تکمیل شد'
-                    : `${toFa(capacity.remaining)} صندلی باقی‌مانده از ${toFa(capacity.capacity)}`}
-              </span>
-            </div>
-            <div className="h-1 w-full overflow-hidden rounded-full bg-white/10">
-              {capacityLoading ? (
-                <div className="h-full w-1/2 animate-pulse rounded-full bg-gradient-to-l from-[#dfb16b]/70 to-[#fae3bb]/40" />
-              ) : (
-                <div
-                  className={`h-full rounded-full bg-gradient-to-l ${barColor} transition-all duration-500`}
-                  style={{ width: `${capacity.percentFilled}%` }}
-                />
-              )}
-            </div>
-          </div>
-
+        {/* Audio & Snow Controls */}
+        <div className="flex shrink-0 items-center justify-end gap-2 sm:gap-2.5">
           <button
             type="button"
             onClick={onToggleAudio}
             aria-pressed={audioEnabled}
-            aria-label="پخش یا قطع موسیقی سنتی شب یلدا"
+            aria-label="پخش یا قطع موسیقی سنتی مراسم شب یلدا"
             data-testid="audio-toggle-btn"
             className={`inline-flex h-10 items-center justify-center gap-1.5 rounded-xl border px-2.5 text-xs font-semibold transition-colors whitespace-nowrap shrink-0 cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#dfb16b] sm:px-3 ${
               audioEnabled

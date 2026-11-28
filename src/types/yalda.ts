@@ -19,7 +19,7 @@ export interface EventConfig {
 
 export const EVENT_CONFIG: EventConfig = {
   associationName: 'انجمن فرهنگی هنری آوید',
-  title: 'جشن شب یلدا ۱۴۰۵ | هلسینکی',
+  title: 'مراسم شب یلدا ۱۴۰۵ | هلسینکی',
   date: 'یکشنبه ۲۹ آذر ۱۴۰۵ (۲۰ دسامبر ۲۰۲۶)',
   venue: 'Roihuvuori Youth Centre',
   address: 'Prinssintie 1, 00820 Helsinki',

@@ -127,7 +127,7 @@ export function StepInvitation({ isFull }: StepInvitationProps) {
           در بلندترین شب زمستان شمال، کنار هم یلدا را جشن می‌گیریم
         </h2>
         <p className="mx-auto max-w-lg text-xs font-light leading-relaxed text-[#e2d4dc] sm:text-sm">
-          دورهمی صمیمی شب یلدای ۱۴۰۵ در هلسینکی با اکران فیلم، چای داغ و تنقلات یلدایی.
+          دورهمی صمیمی مراسم شب یلدای ۱۴۰۵ در هلسینکی با اکران فیلم، چای داغ و تنقلات یلدایی.
         </p>
       </div>
 

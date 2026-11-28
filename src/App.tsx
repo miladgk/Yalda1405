@@ -42,12 +42,6 @@ export default function App() {
   const [direction, setDirection] = useState<'forward' | 'backward'>('forward');
   const [capacityTotal, setCapacityTotal] = useState(EVENT_CONFIG.maxCapacity);
   const [bookedCount, setBookedCount] = useState(EVENT_CONFIG.initialBooked);
-  const [capacityLoading, setCapacityLoading] = useState(() =>
-    Boolean(
-      typeof window !== 'undefined' &&
-        (window.google?.script?.run || isGasUrlConfigured())
-    )
-  );
   const [snowEnabled, setSnowEnabled] = useState(() => {
     if (typeof window === 'undefined') return true;
     try {
@@ -143,20 +137,15 @@ export default function App() {
       runner
         .withSuccessHandler((raw) => {
           applyEventStatus(raw as GasEventStatusResponse | null);
-          setCapacityLoading(false);
         })
         .withFailureHandler(() => {
           // Keep initial defaults gracefully
-          setCapacityLoading(false);
         })
         .getEventStatus();
       return;
     }
 
-    if (!isGasUrlConfigured()) {
-      setCapacityLoading(false);
-      return;
-    }
+    if (!isGasUrlConfigured()) return;
 
     let cancelled = false;
     fetchEventStatusFromGas()
@@ -167,11 +156,6 @@ export default function App() {
       })
       .catch(() => {
         // Keep initial defaults gracefully on network error
-      })
-      .finally(() => {
-        if (!cancelled) {
-          setCapacityLoading(false);
-        }
       });
 
     return () => {
@@ -442,15 +426,13 @@ export default function App() {
           />
         ) : (
           <section
-            aria-label="ثبت‌نام جشن شب یلدا ۱۴۰۵ هلسینکی"
+            aria-label="ثبت‌نام مراسم شب یلدا ۱۴۰۵ هلسینکی"
             className="glass-stage-card yalda-3d-enter relative flex max-h-[calc(100dvh-2rem)] w-full flex-col overflow-hidden rounded-3xl sm:max-h-[calc(100dvh-3rem)]"
           >
             <div className="glass-sheen pointer-events-none absolute inset-0 z-0 overflow-hidden rounded-3xl" aria-hidden="true" />
 
           <StageHeader
             currentStep={headerStep}
-            capacity={capacity}
-            capacityLoading={capacityLoading}
             snowEnabled={snowEnabled}
             audioEnabled={audioEnabled}
             onToggleSnow={() => setSnowEnabled((prev) => !prev)}
