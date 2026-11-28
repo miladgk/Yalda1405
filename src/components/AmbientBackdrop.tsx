@@ -186,6 +186,7 @@ function createSnowflakeSprites(): HTMLCanvasElement[] {
 
 export function AmbientBackdrop({ snowEnabled, burstTrigger }: AmbientBackdropProps) {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const shamsehStageRef = useRef<HTMLDivElement | null>(null);
   const snowRef = useRef(snowEnabled);
   const sparksRef = useRef<Spark[]>([]);
 
@@ -314,6 +315,14 @@ export function AmbientBackdrop({ snowEnabled, burstTrigger }: AmbientBackdropPr
         currentScrollY += (targetScrollY - currentScrollY) * 0.08;
         pointerVx *= 0.92;
         pointerVy *= 0.92;
+      }
+
+      const shamsehEl = shamsehStageRef.current;
+      if (shamsehEl) {
+        const t = performance.now() * 0.001;
+        const tiltX = 20 + (advance ? Math.sin(t * 0.24) * 5.5 - currentPointerY * 9 : 0);
+        const tiltY = -8 + (advance ? Math.cos(t * 0.19) * 7 + currentPointerX * 11 : 0);
+        shamsehEl.style.transform = `perspective(1100px) rotateX(${tiltX.toFixed(2)}deg) rotateY(${tiltY.toFixed(2)}deg)`;
       }
 
       const pointerSpeedMag = Math.min(1, Math.hypot(pointerVx, pointerVy));
@@ -477,33 +486,86 @@ export function AmbientBackdrop({ snowEnabled, burstTrigger }: AmbientBackdropPr
         </g>
       </svg>
 
-      {/* Slowly Rotating Golden Persian Shamseh */}
+      {/* 3D Layered Golden Persian Shamseh Astrolabe */}
       <div className="pointer-events-none fixed inset-0 z-[1] flex items-center justify-center overflow-hidden" aria-hidden="true">
-        <svg className="shamseh-svg h-[min(96vmin,780px)] w-[min(96vmin,780px)] text-[#dfb16b] opacity-[0.1]" viewBox="0 0 400 400" fill="none">
-          <defs>
-            <g id="bannaiTileMN" stroke="currentColor" strokeWidth="1.45" strokeLinecap="square" strokeLinejoin="miter">
-              <path d="M167,69 L173,69 L173,54 L181,62 L189,54 L189,69 L197,69 L197,59 L203,59 L203,54 L217,68 L217,54 L225,54 L225,69 L233,69" />
-              <path d="M173,50 L189,50 M203,50 L217,50" strokeOpacity="0.55" strokeWidth="0.9" />
-              <rect x="180" y="65.5" width="1.8" height="1.8" fill="currentColor" stroke="none" />
-              <rect x="208.5" y="48.5" width="1.8" height="1.8" fill="currentColor" stroke="none" />
-            </g>
-          </defs>
-          <circle cx="200" cy="200" r="192" stroke="currentColor" strokeWidth="0.9" strokeDasharray="3 6" />
-          <circle cx="200" cy="200" r="176" stroke="currentColor" strokeWidth="0.7" strokeOpacity="0.65" />
-          <circle cx="200" cy="200" r="154" stroke="currentColor" strokeWidth="1.0" />
-          <circle cx="200" cy="200" r="127" stroke="currentColor" strokeWidth="1.0" />
-          <g>
-            {[0, 30, 60, 90, 120, 150, 180, 210, 240, 270, 300, 330].map((deg) => (
-              <use key={deg} href="#bannaiTileMN" transform={`rotate(${deg} 200 200)`} />
-            ))}
-          </g>
-          <g stroke="currentColor" strokeWidth="0.95">
-            <polygon points="200,76 218,133 262,93 249,151 307,138 267,182 324,200 267,218 307,262 249,249 262,307 218,267 200,324 182,267 138,307 151,249 93,262 133,218 76,200 133,182 93,138 151,151 138,93 182,133" />
-            <polygon points="200,104 224,140 268,132 260,176 296,200 260,224 268,268 224,260 200,296 176,260 132,268 140,224 104,200 140,176 132,132 176,140" strokeOpacity="0.65" />
-            <circle cx="200" cy="200" r="56" strokeDasharray="2 4" />
-            <circle cx="200" cy="200" r="28" />
-          </g>
-        </svg>
+        <div
+          ref={shamsehStageRef}
+          className="relative flex h-[min(96vmin,780px)] w-[min(96vmin,780px)] items-center justify-center"
+          style={{
+            transformStyle: 'preserve-3d',
+            transform: 'perspective(1100px) rotateX(20deg) rotateY(-8deg)',
+          }}
+        >
+          {/* Back Z-Layer: Outer Concentric Rings */}
+          <div
+            className="absolute inset-0 flex items-center justify-center"
+            style={{ transform: 'translateZ(-130px) scale(1.06)' }}
+          >
+            <svg className="shamseh-spin-back h-full w-full opacity-[0.075]" viewBox="0 0 400 400" fill="none">
+              <defs>
+                <linearGradient id="shamsehGoldBack" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stopColor="#fae3bb" />
+                  <stop offset="50%" stopColor="#dfb16b" />
+                  <stop offset="100%" stopColor="#7a511e" />
+                </linearGradient>
+              </defs>
+              <circle cx="200" cy="200" r="192" stroke="url(#shamsehGoldBack)" strokeWidth="1.0" strokeDasharray="3 6" />
+              <circle cx="200" cy="200" r="176" stroke="url(#shamsehGoldBack)" strokeWidth="0.75" strokeOpacity="0.7" />
+            </svg>
+          </div>
+
+          {/* Middle Z-Layer: Kufic Bannai Inscription Ring */}
+          <div
+            className="absolute inset-0 flex items-center justify-center"
+            style={{ transform: 'translateZ(0px)' }}
+          >
+            <svg className="shamseh-spin-mid h-full w-full opacity-[0.13]" viewBox="0 0 400 400" fill="none">
+              <defs>
+                <linearGradient id="shamsehGoldMid" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stopColor="#fff1cf" />
+                  <stop offset="38%" stopColor="#dfb16b" />
+                  <stop offset="72%" stopColor="#b88438" />
+                  <stop offset="100%" stopColor="#8f6224" />
+                </linearGradient>
+                <g id="bannaiTileMN" stroke="url(#shamsehGoldMid)" strokeWidth="1.45" strokeLinecap="square" strokeLinejoin="miter">
+                  <path d="M167,69 L173,69 L173,54 L181,62 L189,54 L189,69 L197,69 L197,59 L203,59 L203,54 L217,68 L217,54 L225,54 L225,69 L233,69" />
+                  <path d="M173,50 L189,50 M203,50 L217,50" strokeOpacity="0.55" strokeWidth="0.9" />
+                  <rect x="180" y="65.5" width="1.8" height="1.8" fill="#fae3bb" stroke="none" />
+                  <rect x="208.5" y="48.5" width="1.8" height="1.8" fill="#fae3bb" stroke="none" />
+                </g>
+              </defs>
+              <circle cx="200" cy="200" r="154" stroke="url(#shamsehGoldMid)" strokeWidth="1.05" />
+              <circle cx="200" cy="200" r="127" stroke="url(#shamsehGoldMid)" strokeWidth="1.05" />
+              <g>
+                {[0, 30, 60, 90, 120, 150, 180, 210, 240, 270, 300, 330].map((deg) => (
+                  <use key={deg} href="#bannaiTileMN" transform={`rotate(${deg} 200 200)`} />
+                ))}
+              </g>
+            </svg>
+          </div>
+
+          {/* Front Z-Layer: Counter-Rotating Star Geometry & Core */}
+          <div
+            className="absolute inset-0 flex items-center justify-center"
+            style={{ transform: 'translateZ(85px)' }}
+          >
+            <svg className="shamseh-spin-front h-full w-full opacity-[0.18]" viewBox="0 0 400 400" fill="none">
+              <defs>
+                <linearGradient id="shamsehGoldFront" x1="15%" y1="10%" x2="85%" y2="90%">
+                  <stop offset="0%" stopColor="#fff4d6" />
+                  <stop offset="45%" stopColor="#dfb16b" />
+                  <stop offset="100%" stopColor="#9a6826" />
+                </linearGradient>
+              </defs>
+              <g stroke="url(#shamsehGoldFront)" strokeWidth="1.05">
+                <polygon points="200,76 218,133 262,93 249,151 307,138 267,182 324,200 267,218 307,262 249,249 262,307 218,267 200,324 182,267 138,307 151,249 93,262 133,218 76,200 133,182 93,138 151,151 138,93 182,133" />
+                <polygon points="200,104 224,140 268,132 260,176 296,200 260,224 268,268 224,260 200,296 176,260 132,268 140,224 104,200 140,176 132,132 176,140" strokeOpacity="0.72" />
+                <circle cx="200" cy="200" r="56" strokeDasharray="2 4" />
+                <circle cx="200" cy="200" r="28" />
+              </g>
+            </svg>
+          </div>
+        </div>
       </div>
 
       {/* Interactive 6-Pointed Crystalline Snowfall + Depth Parallax + Step 4 Sparkles */}

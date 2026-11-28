@@ -8,7 +8,7 @@ interface StepInvitationProps {
   isFull: boolean;
 }
 
-type MorseFrameType = 'dots' | 'shortDash' | 'longDoubleDash';
+type MorseFrameType = 'dot' | 'shortDash' | 'longDoubleDash';
 
 interface FlipDetailCard {
   id: string;
@@ -25,10 +25,10 @@ const DETAIL_CARDS: FlipDetailCard[] = [
     id: 'schedule',
     title: 'زمان‌بندی',
     frontPrimary: 'شروع برنامه ۱۵:۳۰',
-    frontSecondary: 'اکران فیلم ۱۶:۰۰',
-    backText: 'شروع برنامه ساعت ۱۵:۳۰ است؛ اکران فیلم از ۱۶:۰۰ تا ۱۷:۴۵ و دورهمی صمیمی یلدایی از ساعت ۱۸:۰۰ ادامه دارد.',
+    frontSecondary: 'اکران فیلم ۱۵:۳۰',
+    backText: 'شروع برنامه و اکران فیلم از ساعت ۱۵:۳۰ تا ۱۷:۴۵ است و دورهمی صمیمی یلدایی از ساعت ۱۸:۰۰ ادامه دارد.',
     icon: 'clock',
-    morseType: 'dots',
+    morseType: 'dot',
   },
   {
     id: 'hospitality',
@@ -78,11 +78,8 @@ function CardMorseFrame({
           {morseType === 'shortDash' && (
             <span className="block h-[2px] w-2 rounded-full bg-[#fae3bb] shadow-[0_0_8px_rgba(223,177,107,0.7)] sm:w-3" />
           )}
-          {morseType === 'dots' && (
-            <span className="flex items-center gap-1.5">
-              <span className="block h-[3.5px] w-[3.5px] rounded-full bg-[#fae3bb] shadow-[0_0_7px_rgba(223,177,107,0.75)] sm:h-1 sm:w-1" />
-              <span className="block h-[3.5px] w-[3.5px] rounded-full bg-[#fae3bb] shadow-[0_0_7px_rgba(223,177,107,0.75)] sm:h-1 sm:w-1" />
-            </span>
+          {morseType === 'dot' && (
+            <span className="block h-[3.5px] w-[3.5px] rounded-full bg-[#fae3bb] shadow-[0_0_7px_rgba(223,177,107,0.75)] sm:h-1 sm:w-1" />
           )}
         </span>
 

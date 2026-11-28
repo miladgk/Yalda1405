@@ -89,14 +89,31 @@
   50% { stroke-opacity: 0.088; }
 }
 
-.shamseh-svg {
-  animation: spinShamseh 100s linear infinite;
+.shamseh-spin-back {
+  animation: spinShamseh 130s linear infinite;
+  will-change: transform;
+}
+
+.shamseh-spin-mid {
+  animation: spinShamseh 96s linear infinite;
+  filter: drop-shadow(0 6px 14px rgba(0, 0, 0, 0.55));
+  will-change: transform;
+}
+
+.shamseh-spin-front {
+  animation: spinShamsehReverse 120s linear infinite;
+  filter: drop-shadow(0 10px 22px rgba(223, 177, 107, 0.24)) drop-shadow(0 14px 26px rgba(0, 0, 0, 0.65));
   will-change: transform;
 }
 
 @keyframes spinShamseh {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
+}
+
+@keyframes spinShamsehReverse {
+  from { transform: rotate(360deg); }
+  to { transform: rotate(0deg); }
 }
 
 .glass-stage-card {
@@ -502,7 +519,6 @@
   .orb-ruby,
   .orb-gold,
   .orb-aurora,
-  .shamseh-svg,
   .glass-sheen::before,
   .holo-sheen::before,
   .star-twinkle,
